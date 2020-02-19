@@ -53,6 +53,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\AnimationController.cs" />
      <Compile Include="Assets\Scripts\Bounce.cs" />
  <Reference Include="Unity.TextMeshPro.Editor">
  <HintPath>/Users/Marissaliu/Code/Flonkerton/Flonkerton/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
