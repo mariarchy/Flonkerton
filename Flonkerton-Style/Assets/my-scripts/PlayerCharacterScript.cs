@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerCharacterScript : MonoBehaviour
 {
+    // const string ENEMY = "Enemy";
+
     bool isJumping;
     Vector3 initialPosition;
     Vector3 endPosition;
@@ -19,11 +21,8 @@ public class PlayerCharacterScript : MonoBehaviour
     public GameObject strip10;
     public GameObject strip11;
     public GameObject strip12;
-    public GameObject strip13;
-    public GameObject strip14;
-    public GameObject strip15;
 
-    public float POS_OFFSET = 1.7F;
+    public float POS_OFFSET = 2F;
     public float SPEED = 30;
     public float JUMP_INCREMENT = 15F;
     public GameObject[] stripPrefabs;
@@ -51,9 +50,6 @@ public class PlayerCharacterScript : MonoBehaviour
         strips.Add(strip10);
         strips.Add(strip11);
         strips.Add(strip12);
-        strips.Add(strip13);
-        strips.Add(strip14);
-        strips.Add(strip15);
     }
 
     // Update is called once per frame
@@ -148,5 +144,14 @@ public class PlayerCharacterScript : MonoBehaviour
 
         // Add strip to map
         strips.Add(newStrip);
+    }
+
+    // Checks for enemy collisions
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Enemy")
+        {
+            Debug.Log("Collision has occurred");
+        }
     }
 }
