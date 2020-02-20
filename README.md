@@ -1,5 +1,5 @@
 # Flonkerton
 
-**A video game about paper 📑👩🏻‍💼**
+**A Video Game about PAPER 📑👩🏻‍💼**
 
 Built with Unity 5
