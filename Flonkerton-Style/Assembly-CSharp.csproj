@@ -56,6 +56,8 @@
      <Compile Include="Assets\my-scripts\CarDriveLeftSideScript.cs" />
      <Compile Include="Assets\my-scripts\CarDriveRightSideScript.cs" />
      <Compile Include="Assets\my-scripts\PlayerCharacterScript.cs" />
+     <Compile Include="Assets\my-scripts\SwipeDetector.cs" />
+     <Compile Include="Assets\my-scripts\SwipeMobileDetector.cs" />
  <Reference Include="Unity.TextMeshPro.Editor">
  <HintPath>/Users/Marissaliu/Code/Flonkerton/Flonkerton-Style/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
  </Reference>
