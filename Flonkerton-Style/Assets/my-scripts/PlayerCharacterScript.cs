@@ -5,12 +5,13 @@ using UnityEngine;
 public class PlayerCharacterScript : MonoBehaviour
 {
     const string ENEMY = "Enemy";
+    const string OBSTACLE = "Obstacle";
     bool isJumpingUp;
     bool isJumpingDown;
     bool isJumpingRight;
     bool isJumpingLeft;
 
-    Vector3 initialPosition;
+    Vector3 startPosition;
     Vector3 endPosition;
     public GameObject strip1;
     public GameObject strip2;
@@ -26,9 +27,11 @@ public class PlayerCharacterScript : MonoBehaviour
     public GameObject strip12;
 
     public float POS_OFFSET = 2.3F;
-    public float SPEED = 30;
-    public float JUMP_INCREMENT = 15F;
+    public float SPEED = 40;
+    public float JUMP_INCREMENT = 40F;
     public float HORIZONTAL_JUMP_DISTANCE = 7.0F;
+    public GameObject boundaryLeft;
+    public GameObject boundaryRight;
     public GameObject[] stripPrefabs;
     // TODO: rename this once characters have been changed
     public GameObject playerMesh;
@@ -114,7 +117,7 @@ public class PlayerCharacterScript : MonoBehaviour
                 // Stop movement once player has reached movement destination
                 isJumpingUp = false;
                 this.transform.position = new Vector3(this.transform.position.x,
-                                                      initialPosition.y,
+                                                      startPosition.y,
                                                       this.transform.position.z);
             }
         } else if (isJumpingDown) {
@@ -144,7 +147,7 @@ public class PlayerCharacterScript : MonoBehaviour
                 // Stop movement once player has reached movement destination
                 isJumpingDown = false;
                 this.transform.position = new Vector3(this.transform.position.x,
-                                                      initialPosition.y,
+                                                      startPosition.y,
                                                       this.transform.position.z);
             }
         } else if (isJumpingLeft) {
@@ -170,6 +173,9 @@ public class PlayerCharacterScript : MonoBehaviour
             {
                 // Stop movement once player has reached movement destination
                 isJumpingLeft = false;
+                this.transform.position = new Vector3(this.transform.position.x,
+                                                      startPosition.y,
+                                                      this.transform.position.z);
             }
         } else if (isJumpingRight) {
             if (this.transform.position.z < midpoint)
@@ -194,6 +200,9 @@ public class PlayerCharacterScript : MonoBehaviour
             {
                 // Stop movement once player has reached movement destination
                 isJumpingRight = false;
+                this.transform.position = new Vector3(this.transform.position.x,
+                                                      startPosition.y,
+                                                      this.transform.position.z);
             }
         }
 
@@ -242,6 +251,32 @@ public class PlayerCharacterScript : MonoBehaviour
         {
             Debug.Log("Collision has occurred");
             DeathAnimation();
+        }
+
+        if (other.gameObject.tag == OBSTACLE)
+        {
+            Debug.Log("Collision with obstacle has occurred");
+
+            // Set offset position based on direction approaching obstacle
+            float horizontalOffset = 0;
+            float verticalOffset = 0;
+            if (isJumpingUp) {
+                verticalOffset = -2.0F;
+            } else if (isJumpingDown) {
+                verticalOffset = 2.0F;
+            } else if (isJumpingLeft) {
+                horizontalOffset = 2.0F;
+            } else if (isJumpingRight) {
+                horizontalOffset = -2.0F;
+            }
+
+            // Reset values using offset so player stays in place
+            this.transform.position = new Vector3(
+                this.transform.position.x,
+                startPosition.y,
+                this.transform.position.z);
+
+            isJumpingUp = isJumpingDown = isJumpingLeft = isJumpingRight = false;
         }
     }
 
@@ -322,7 +357,9 @@ public class PlayerCharacterScript : MonoBehaviour
         stripIndex += 1;
         GameObject nextStrip = strips[stripIndex] as GameObject;
 
-        // Set the end position of the jump as the next strip we want to jump to
+        // Set the start position and end position of the jump as the next strip
+        // we want to jump to
+        startPosition = this.transform.position;
         endPosition = new Vector3(
             nextStrip.transform.position.x - POS_OFFSET,
             nextStrip.transform.position.y,
@@ -336,6 +373,13 @@ public class PlayerCharacterScript : MonoBehaviour
         playerMesh.transform.localEulerAngles = FRONT;
 
         SpawnNewStrip();
+
+        // Calculate distance travelled in jump
+        moveBoundaryX(endPosition.x - this.transform.position.x);
+
+        this.transform.position = new Vector3(this.transform.position.x,
+                                              startPosition.y,
+                                              this.transform.position.z);
     }
 
     void JumpDown()
@@ -352,7 +396,9 @@ public class PlayerCharacterScript : MonoBehaviour
 
         GameObject prevStrip = strips[stripIndex] as GameObject;
 
-        // Set the end position of the jump as the next strip we want to jump to
+        // Set the start position and end position of the jump as the next strip
+        // we want to jump to
+        startPosition = this.transform.position;
         endPosition = new Vector3(
             prevStrip.transform.position.x - POS_OFFSET,
             this.transform.position.y,
@@ -363,11 +409,16 @@ public class PlayerCharacterScript : MonoBehaviour
 
         // Set character to face the front
         playerMesh.transform.localEulerAngles = BACK;
+
+        // Calculate distance travelled in jump
+        moveBoundaryX(endPosition.x - this.transform.position.x);
     }
 
     void JumpRight()
     {
-        // Set the end position of the jump as the next strip we want to jump to
+        // Set the start position and end position of the jump as the next strip
+        // we want to jump to
+        startPosition = this.transform.position;
         endPosition = new Vector3(
             this.transform.position.x,
             this.transform.position.y,
@@ -382,7 +433,9 @@ public class PlayerCharacterScript : MonoBehaviour
 
     void JumpLeft()
     {
-        // Set the end position of the jump as the next strip we want to jump to
+        // Set the start position and end position of the jump as the next strip
+        // we want to jump to
+        startPosition = this.transform.position;
         endPosition = new Vector3(
             this.transform.position.x,
             this.transform.position.y,
@@ -393,5 +446,13 @@ public class PlayerCharacterScript : MonoBehaviour
 
         // Set character to face the front
         playerMesh.transform.localEulerAngles = LEFT;
+    }
+
+    // Move left and right boundaries when player jumps up or down
+    void moveBoundaryX(float distance)
+    {
+        // Calculate distance travelled in jump
+        boundaryLeft.transform.position += new Vector3(distance, 0, 0);
+        boundaryRight.transform.position += new Vector3(distance, 0, 0);
     }
 }
