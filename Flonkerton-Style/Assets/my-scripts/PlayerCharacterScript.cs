@@ -22,14 +22,20 @@ public class PlayerCharacterScript : MonoBehaviour
     public GameObject strip11;
     public GameObject strip12;
 
-    public float POS_OFFSET = 2F;
+    public float POS_OFFSET = 2.3F;
     public float SPEED = 30;
     public float JUMP_INCREMENT = 15F;
     public GameObject[] stripPrefabs;
+    // TODO: rename this once characters have been changed
+    public GameObject playerMesh;
 
     int stripIndex = 0;
     private List<GameObject> strips;
     private float midpointX;
+    private bool isDead = false;
+    private bool playingDeathAnimation = false;
+    private float DEATH_SCALE_Z = 0.2F;
+    private float DEATH_ROTATION = -90.0F;
 
     // Start is called before the first frame update
     void Start()
@@ -55,6 +61,12 @@ public class PlayerCharacterScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Terminate if the player is dead
+        if (isDead)
+        {
+            return;
+        }
+
         if (Input.GetMouseButtonDown(0) && !isJumping)
         {
             // Commence jumping movement
@@ -94,6 +106,13 @@ public class PlayerCharacterScript : MonoBehaviour
                                                       initialPosition.y,
                                                       this.transform.position.z);
             }
+        }
+
+        // If player is in the middle of a dealth animation, update next Death
+        // Animation values
+        if (playingDeathAnimation)
+        {
+            UpdateDeathAnimation();
         }
     }
 
@@ -152,6 +171,39 @@ public class PlayerCharacterScript : MonoBehaviour
         if (other.gameObject.tag == "Enemy")
         {
             Debug.Log("Collision has occurred");
+            DeathAnimation();
+        }
+    }
+
+    // Trigger death animation
+    void DeathAnimation()
+    {
+        playingDeathAnimation = true;
+    }
+
+    // Player death animation
+    void UpdateDeathAnimation()
+    {
+        // If player mesh has not completed animation, descale and complete it
+        if (playerMesh.transform.localScale.z > DEATH_SCALE_Z)
+        {
+            playerMesh.transform.localScale -= new Vector3(0, 0, DEATH_SCALE_Z);
+        }
+        else
+        {
+            // Animation is completed
+            playingDeathAnimation = false;
+            isDead = true;
+        }
+
+        float playerRotationX = playerMesh.transform.eulerAngles.x;
+
+        Debug.Log(playerMesh.transform.rotation.eulerAngles.x);
+
+        if (playerMesh.transform.rotation.eulerAngles.x == 0 || playerMesh.transform.rotation.eulerAngles.x > 270)
+        {
+            Debug.Log("ROTATED");
+            playerMesh.transform.Rotate(DEATH_ROTATION, 0, 0);
         }
     }
 }
