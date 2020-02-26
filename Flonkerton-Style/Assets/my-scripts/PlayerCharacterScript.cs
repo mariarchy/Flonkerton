@@ -1,16 +1,12 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerCharacterScript : MonoBehaviour
 {
-    const string ENEMY = "Enemy";
-    const string OBSTACLE = "Obstacle";
-    bool isJumpingUp;
-    bool isJumpingDown;
-    bool isJumpingRight;
-    bool isJumpingLeft;
-
+    // GAME MAP VARIABLES
     Vector3 startPosition;
     Vector3 endPosition;
     public GameObject strip1;
@@ -26,6 +22,12 @@ public class PlayerCharacterScript : MonoBehaviour
     public GameObject strip11;
     public GameObject strip12;
 
+    // PLAYER MOVEMENT VARIABLES
+    bool isJumpingUp;
+    bool isJumpingDown;
+    bool isJumpingRight;
+    bool isJumpingLeft;
+
     public float POS_OFFSET = 2.3F;
     public float SPEED = 40;
     public float JUMP_INCREMENT = 40F;
@@ -36,19 +38,41 @@ public class PlayerCharacterScript : MonoBehaviour
     // TODO: rename this once characters have been changed
     public GameObject playerMesh;
 
+    // Vectors used to rotate player character in different directions
+    private Vector3 FRONT = new Vector3(0, 0, 0);
+    private Vector3 BACK = new Vector3(0, 180, 0);
+    private Vector3 LEFT = new Vector3(0, 270, 0);
+    private Vector3 RIGHT = new Vector3(0, 90, 0);
+
+    // GAME MENU VARIABLES
+    bool gameStarted = false;
+    public GameObject startPanel;
+    public GameObject gameOverPanel;
+    const string SCENE = "platformFix";
+    public GameObject ghost;
+
+    // GAME OBJECT TAGS
+    const string ENEMY = "Enemy";
+    const string OBSTACLE = "Obstacle";
+    const string COIN = "Coin";
+	
+    // SCORE AND SCHRUTE BUCKS VARIABLES
+    public int score = 0;
+    public int schruteBucks = 0;
+    public Text scoreText;
+    public Text schruteBucksText;
     int stripIndex = 0;
+    private int furthestStrip = 0;
+    // Coin sound variables
+    public AudioClip coinClip;
+
+    // DEATH ANIMATION VARIABLES
     private List<GameObject> strips;
     private float midpoint;
     private bool isDead = false;
     private bool playingDeathAnimation = false;
     private float DEATH_SCALE_Z = 0.2F;
     private float DEATH_ROTATION = -90.0F;
-
-    // Vectors used to rotate player character in different directions
-    private Vector3 FRONT = new Vector3(0, 0, 0);
-    private Vector3 BACK = new Vector3(0, 180, 0);
-    private Vector3 LEFT = new Vector3(0, 270, 0);
-    private Vector3 RIGHT = new Vector3(0, 90, 0);
 
     // Start is called before the first frame update
     void Start()
@@ -69,24 +93,30 @@ public class PlayerCharacterScript : MonoBehaviour
         strips.Add(strip10);
         strips.Add(strip11);
         strips.Add(strip12);
+
+        HideGameOverPanel();
+
+        // Check if player is reloading the game or just starting it
+        int gameReloaded = PlayerPrefs.GetInt("reloaded");
+        if (gameReloaded == 1) {
+            startPanel.SetActive(false);
+            PlayerPrefs.SetInt("reloaded", 0);
+            StartButtonPressed();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!gameStarted) {
+          return;
+        }
         // Terminate if the player is dead
         if (isDead)
         {
             return;
         }
 
-        // if (Input.GetMouseButtonDown(0) && !isJumping)
-        // {
-        //     // Commence jumping movement
-        //     initialPosition = this.transform.position;
-        //     isJumping = true;
-        //     Jump();
-        // }
 
         // Update player coordinates for each jump type
         if (isJumpingUp)
@@ -278,6 +308,20 @@ public class PlayerCharacterScript : MonoBehaviour
 
             isJumpingUp = isJumpingDown = isJumpingLeft = isJumpingRight = false;
         }
+	
+	if (other.gameObject.tag == COIN)
+	{
+	    Debug.Log("Collision with coin");
+	    // Update Schrute Bucks count
+	    schruteBucks += 1;
+            schruteBucksText.text = "Schrute Bucks: " + schruteBucks.ToString();
+	    
+	    // Play coin sound
+	    this.GetComponent<AudioSource>().PlayOneShot(coinClip);	
+	    // Destroy coin so player cannot collect it again
+	    Destroy(other.gameObject);				
+	}
+
     }
 
     // Trigger death animation
@@ -299,6 +343,8 @@ public class PlayerCharacterScript : MonoBehaviour
             // Animation is completed
             playingDeathAnimation = false;
             isDead = true;
+            // Game Over
+            DisplayGameOverPanel();
         }
 
         float playerRotationX = playerMesh.transform.eulerAngles.x;
@@ -312,7 +358,7 @@ public class PlayerCharacterScript : MonoBehaviour
     void SwipeUp()
     {
         Debug.Log("Consuming swipe up");
-        if (!isJumpingUp)
+        if (gameStarted && !isJumpingUp)
         {
             isJumpingUp = true;
             JumpUp();
@@ -322,7 +368,7 @@ public class PlayerCharacterScript : MonoBehaviour
     void SwipeDown()
     {
         Debug.Log("Consuming swipe down");
-        if (!isJumpingDown)
+        if (gameStarted && !isJumpingDown)
         {
             isJumpingDown = true;
             JumpDown();
@@ -332,7 +378,7 @@ public class PlayerCharacterScript : MonoBehaviour
     void SwipeRight()
     {
         Debug.Log("Consuming swipe right");
-        if (!isJumpingRight)
+        if (gameStarted && !isJumpingRight)
         {
             isJumpingRight = true;
             JumpRight();
@@ -342,7 +388,7 @@ public class PlayerCharacterScript : MonoBehaviour
     void SwipeLeft()
     {
         Debug.Log("Consuming swipe left");
-        if (!isJumpingLeft)
+        if (gameStarted && !isJumpingLeft)
         {
             isJumpingLeft = true;
             JumpLeft();
@@ -354,7 +400,16 @@ public class PlayerCharacterScript : MonoBehaviour
     void JumpUp()
     {
         // Iterate to the next strip on the map
-        stripIndex += 1;
+        stripIndex++;
+        // Update score only if player is jumping to a "higher level" strip
+        if (stripIndex > furthestStrip)
+        {
+          score++;
+          scoreText.text = "Score: " + score;
+          furthestStrip = stripIndex;
+          Debug.Log("Score is " + score);
+        }
+
         GameObject nextStrip = strips[stripIndex] as GameObject;
 
         // Set the start position and end position of the jump as the next strip
@@ -391,7 +446,7 @@ public class PlayerCharacterScript : MonoBehaviour
         }
         else
         {
-            stripIndex -= 1;
+            stripIndex--;
         }
 
         GameObject prevStrip = strips[stripIndex] as GameObject;
@@ -454,5 +509,29 @@ public class PlayerCharacterScript : MonoBehaviour
         // Calculate distance travelled in jump
         boundaryLeft.transform.position += new Vector3(distance, 0, 0);
         boundaryRight.transform.position += new Vector3(distance, 0, 0);
+    }
+
+    // Start the game and hide the start panel when button is pressed
+    void StartButtonPressed() {
+        Debug.Log("Start Button Pressed");
+        gameStarted = true;
+        startPanel.SetActive(false);
+    }
+
+    void DisplayGameOverPanel() {
+        gameStarted = false;
+        gameOverPanel.SetActive(true);
+    }
+
+    void HideGameOverPanel() {
+        gameOverPanel.SetActive(false);
+    }
+
+    void PlayAgain() {
+        Debug.Log("Play again button pressed");
+
+        // Reset level and start over
+        SceneManager.LoadScene(SCENE);
+        PlayerPrefs.SetInt("reloaded", 1);
     }
 }

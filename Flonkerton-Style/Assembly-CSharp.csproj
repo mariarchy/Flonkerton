@@ -55,6 +55,8 @@
   <ItemGroup>
      <Compile Include="Assets\my-scripts\CarDriveLeftSideScript.cs" />
      <Compile Include="Assets\my-scripts\CarDriveRightSideScript.cs" />
+     <Compile Include="Assets\my-scripts\CoinScript.cs" />
+     <Compile Include="Assets\my-scripts\GhostScript.cs" />
      <Compile Include="Assets\my-scripts\PlayerCharacterScript.cs" />
      <Compile Include="Assets\my-scripts\SwipeDetector.cs" />
      <Compile Include="Assets\my-scripts\SwipeMobileDetector.cs" />
