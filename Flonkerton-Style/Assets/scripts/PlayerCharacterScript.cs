@@ -48,14 +48,14 @@ public class PlayerCharacterScript : MonoBehaviour
     bool gameStarted = false;
     public GameObject startPanel;
     public GameObject gameOverPanel;
-    const string SCENE = "platformFix";
+    const string SCENE = "Flonkerton_Scene";
     public GameObject ghost;
 
     // GAME OBJECT TAGS
     const string ENEMY = "Enemy";
     const string OBSTACLE = "Obstacle";
     const string COIN = "Coin";
-	
+
     // SCORE AND SCHRUTE BUCKS VARIABLES
     public int score = 0;
     public int schruteBucks = 0;
@@ -63,7 +63,7 @@ public class PlayerCharacterScript : MonoBehaviour
     public Text schruteBucksText;
     int stripIndex = 0;
     private int furthestStrip = 0;
-    
+
     // AUDIO VARIABLES
     public AudioClip coinClip;
     public AudioClip introClip;
@@ -98,7 +98,7 @@ public class PlayerCharacterScript : MonoBehaviour
         strips.Add(strip12);
 
         HideGameOverPanel();
-        
+
         startPanel.SetActive(true);
         // Check if player is reloading the game or just starting it
         int gameReloaded = PlayerPrefs.GetInt("reloaded");
@@ -283,27 +283,13 @@ public class PlayerCharacterScript : MonoBehaviour
     {
         if (other.gameObject.tag == ENEMY)
         {
-            Debug.Log("Collision has occurred");
+            Debug.Log(other.gameObject.name);
             DeathAnimation();
         }
 
         if (other.gameObject.tag == OBSTACLE)
         {
             Debug.Log("Collision with obstacle has occurred");
-
-            // Set offset position based on direction approaching obstacle
-            float horizontalOffset = 0;
-            float verticalOffset = 0;
-            if (isJumpingUp) {
-                verticalOffset = -2.0F;
-            } else if (isJumpingDown) {
-                verticalOffset = 2.0F;
-            } else if (isJumpingLeft) {
-                horizontalOffset = 2.0F;
-            } else if (isJumpingRight) {
-                horizontalOffset = -2.0F;
-            }
-
             // Reset values using offset so player stays in place
             this.transform.position = new Vector3(
                 this.transform.position.x,
@@ -312,18 +298,18 @@ public class PlayerCharacterScript : MonoBehaviour
 
             isJumpingUp = isJumpingDown = isJumpingLeft = isJumpingRight = false;
         }
-	
+
 	if (other.gameObject.tag == COIN)
 	{
 	    Debug.Log("Collision with coin");
 	    // Update Schrute Bucks count
 	    schruteBucks += 1;
             schruteBucksText.text = "Schrute Bucks: " + schruteBucks.ToString();
-	    
+
 	    // Play coin sound
-	    this.GetComponent<AudioSource>().PlayOneShot(coinClip);	
+	    this.GetComponent<AudioSource>().PlayOneShot(coinClip);
 	    // Destroy coin so player cannot collect it again
-	    Destroy(other.gameObject);				
+	    Destroy(other.gameObject);
 	}
 
     }
@@ -520,7 +506,7 @@ public class PlayerCharacterScript : MonoBehaviour
         Debug.Log("Start Button Pressed");
         gameStarted = true;
         startPanel.SetActive(false);
-        
+
         // Stop intro song audio
         AudioSource intro = this.GetComponents<AudioSource>()[1];
         if (intro.isPlaying) {
