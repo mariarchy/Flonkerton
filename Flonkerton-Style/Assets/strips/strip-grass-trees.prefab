@@ -665,6 +665,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: cardboard box
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 294fe44e9113b244ea0024a722e9438f, type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 294fe44e9113b244ea0024a722e9438f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0

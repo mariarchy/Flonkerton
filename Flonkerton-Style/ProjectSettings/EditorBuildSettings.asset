@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/platformFix.unity
+    path: Assets/Flonkerton_Scene.unity
     guid: 8a31dbabdecc34cd5b0da92d5892bd23
   m_configObjects: {}
