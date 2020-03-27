@@ -522,7 +522,7 @@ public class PlayerCharacterScript : MonoBehaviour
     // Load character menu
     void CharacterMenuButtonPressed() {
         Debug.Log("Character Menu Button Pressed");
-        // Return to main menu after selection
+        // Hide start menu panel & display menu panel
         characterMenuPanel.SetActive(true);
     }
 
@@ -546,6 +546,14 @@ public class PlayerCharacterScript : MonoBehaviour
     void CharacterSelectedChar3() {
         Debug.Log("Character 3 Selected");
         PlayerPrefs.SetInt("selectedCharacter", 2);
+        // Return to main menu after selection
+        characterMenuPanel.SetActive(false);
+    }
+
+    // Load char4
+    void CharacterSelectedChar4() {
+        Debug.Log("Character 4 Selected");
+        PlayerPrefs.SetInt("selectedCharacter", 3);
         // Return to main menu after selection
         characterMenuPanel.SetActive(false);
     }
