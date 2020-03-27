@@ -49,6 +49,8 @@ public class PlayerCharacterScript : MonoBehaviour
     public GameObject startPanel;
     public GameObject gameOverPanel;
     const string SCENE = "Flonkerton_Scene";
+    const string REPLAY_SCENE = "Replay_Flonkerton_Scene";
+    const string CHAR_MENU_SCENE = "CharacterMenu_Scene";
     public GameObject ghost;
 
     // GAME OBJECT TAGS
@@ -100,9 +102,11 @@ public class PlayerCharacterScript : MonoBehaviour
         HideGameOverPanel();
 
         startPanel.SetActive(true);
+        PlayerPrefs.SetInt("reloaded", 0);
         // Check if player is reloading the game or just starting it
-        int gameReloaded = PlayerPrefs.GetInt("reloaded");
-        if (gameReloaded == 1) {
+        // Return the current Active Scene in order to get the current Scene name.
+        Scene curr_scene = SceneManager.GetActiveScene();
+        if (curr_scene.name == REPLAY_SCENE) {
             startPanel.SetActive(false);
             PlayerPrefs.SetInt("reloaded", 0);
             StartButtonPressed();
@@ -515,6 +519,27 @@ public class PlayerCharacterScript : MonoBehaviour
         PlayerPrefs.SetInt("reloaded", 1);
     }
 
+    // CHARACTER MENU LISTENERS
+    // Load character menu
+    void CharacterMenuButtonPressed() {
+        Debug.Log("Character Menu Button Pressed");
+        SceneManager.LoadScene(CHAR_MENU_SCENE);
+    }
+
+    // Load char1
+    void CharacterSelectedChar1() {
+        Debug.Log("Character 1 Selected");
+        PlayerPrefs.SetInt("selectedCharacter", 1);
+        SceneManager.LoadScene(SCENE);
+    }
+
+    // Load char2
+    void CharacterSelectedChar2() {
+        Debug.Log("Character 2 Selected");
+        PlayerPrefs.SetInt("selectedCharacter", 2);
+        SceneManager.LoadScene(SCENE);
+    }
+
     void DisplayGameOverPanel() {
         gameStarted = false;
         gameOverPanel.SetActive(true);
@@ -528,7 +553,7 @@ public class PlayerCharacterScript : MonoBehaviour
         Debug.Log("Play again button pressed");
 
         // Reset level and start over
-        SceneManager.LoadScene(SCENE);
+        SceneManager.LoadScene(REPLAY_SCENE);
         PlayerPrefs.SetInt("reloaded", 1);
     }
 }
