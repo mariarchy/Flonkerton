@@ -6,6 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class PlayerCharacterScript : MonoBehaviour
 {
+    // GAME CHARACTER OPTIONS
+    public GameObject char1;
+    public GameObject char2;
+    public GameObject char3;
+    public GameObject char4;
+
     // GAME MAP VARIABLES
     Vector3 startPosition;
     Vector3 endPosition;
@@ -102,7 +108,13 @@ public class PlayerCharacterScript : MonoBehaviour
         HideGameOverPanel();
 
         startPanel.SetActive(true);
-        PlayerPrefs.SetInt("play", 0);    // Disable game
+
+        if (!PlayerPrefs.HasKey("selectedChar")) {
+          PlayerPrefs.SetInt("selectedChar", 0);    // Select default character
+        }
+        setSelectedCharacter();                     // Activate selected char
+
+        PlayerPrefs.SetInt("play", 0);            // Disable game
         // Check if player is reloading the game or just starting it
         // Return the current Active Scene in order to get the current Scene name.
         Scene curr_scene = SceneManager.GetActiveScene();
@@ -532,6 +544,7 @@ public class PlayerCharacterScript : MonoBehaviour
         PlayerPrefs.SetInt("selectedCharacter", 0);
         // Return to main menu after selection
         characterMenuPanel.SetActive(false);
+        setSelectedCharacter();
     }
 
     // Load char2
@@ -540,6 +553,7 @@ public class PlayerCharacterScript : MonoBehaviour
         PlayerPrefs.SetInt("selectedCharacter", 1);
         // Return to main menu after selection
         characterMenuPanel.SetActive(false);
+        setSelectedCharacter();
     }
 
     // Load char3
@@ -548,6 +562,7 @@ public class PlayerCharacterScript : MonoBehaviour
         PlayerPrefs.SetInt("selectedCharacter", 2);
         // Return to main menu after selection
         characterMenuPanel.SetActive(false);
+        setSelectedCharacter();
     }
 
     // Load char4
@@ -556,6 +571,34 @@ public class PlayerCharacterScript : MonoBehaviour
         PlayerPrefs.SetInt("selectedCharacter", 3);
         // Return to main menu after selection
         characterMenuPanel.SetActive(false);
+        setSelectedCharacter();
+    }
+
+    // Set active character based on user input in the character menu
+    void setSelectedCharacter() {
+        int selectedChar = PlayerPrefs.GetInt("selectedCharacter");
+        char1.SetActive(false);
+        char2.SetActive(false);
+        char3.SetActive(false);
+        char4.SetActive(false);
+        switch(selectedChar) {
+          case 0:
+            char1.SetActive(true);
+            playerMesh = char1;
+            break;
+          case 1:
+            char2.SetActive(true);
+            playerMesh = char2;
+            break;
+          case 2:
+            char3.SetActive(true);
+            playerMesh = char3;
+            break;
+          case 3:
+            char4.SetActive(true);
+            playerMesh = char4;
+            break;
+        }
     }
 
     void DisplayGameOverPanel() {
