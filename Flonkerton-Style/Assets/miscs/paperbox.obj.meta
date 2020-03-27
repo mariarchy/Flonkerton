@@ -1,12 +1,13 @@
 fileFormatVersion: 2
-guid: 590c7d46c8a615f4198bca81e977dc91
+guid: 4fa7de7e4fa3947ed9290cbe48cccdd0
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: //RootNode
-    100002: default
-    400000: //RootNode
-    400002: default
+    100000: default
+    100002: //RootNode
+    400000: default
+    400002: //RootNode
+    2100000: defaultMat
     2300000: default
     3300000: default
     4300000: default
@@ -15,12 +16,12 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: defaultMat
-    second: {fileID: 2100000, guid: ddff7123e22b49847ae0c2d9e3c736ea, type: 2}
+    second: {fileID: 2100000, guid: dbf67bfdbeeeb46349e5cfca01dd4ec5, type: 2}
   materials:
     importMaterials: 1
-    materialName: 1
-    materialSearch: 0
-    materialLocation: 1
+    materialName: 2
+    materialSearch: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -61,7 +62,7 @@ ModelImporter:
     keepQuads: 0
     weldVertices: 1
     preserveHierarchy: 0
-    indexFormat: 1
+    indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
@@ -74,7 +75,7 @@ ModelImporter:
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
-    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
   importAnimation: 1

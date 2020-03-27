@@ -6,6 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class PlayerCharacterScript : MonoBehaviour
 {
+    // GAME CHARACTER OPTIONS
+    public GameObject char1;
+    public GameObject char2;
+    public GameObject char3;
+    public GameObject char4;
+
     // GAME MAP VARIABLES
     Vector3 startPosition;
     Vector3 endPosition;
@@ -48,7 +54,9 @@ public class PlayerCharacterScript : MonoBehaviour
     bool gameStarted = false;
     public GameObject startPanel;
     public GameObject gameOverPanel;
+    public GameObject characterMenuPanel;
     const string SCENE = "Flonkerton_Scene";
+    const string REPLAY_SCENE = "Replay_Flonkerton_Scene";
     public GameObject ghost;
 
     // GAME OBJECT TAGS
@@ -100,11 +108,18 @@ public class PlayerCharacterScript : MonoBehaviour
         HideGameOverPanel();
 
         startPanel.SetActive(true);
+
+        if (!PlayerPrefs.HasKey("selectedChar")) {
+          PlayerPrefs.SetInt("selectedChar", 0);    // Select default character
+        }
+        setSelectedCharacter();                     // Activate selected char
+
+        PlayerPrefs.SetInt("play", 0);            // Disable game
         // Check if player is reloading the game or just starting it
-        int gameReloaded = PlayerPrefs.GetInt("reloaded");
-        if (gameReloaded == 1) {
+        // Return the current Active Scene in order to get the current Scene name.
+        Scene curr_scene = SceneManager.GetActiveScene();
+        if (curr_scene.name == REPLAY_SCENE) {
             startPanel.SetActive(false);
-            PlayerPrefs.SetInt("reloaded", 0);
             StartButtonPressed();
         }
     }
@@ -505,6 +520,7 @@ public class PlayerCharacterScript : MonoBehaviour
     void StartButtonPressed() {
         Debug.Log("Start Button Pressed");
         gameStarted = true;
+        PlayerPrefs.SetInt("play", 1);
         startPanel.SetActive(false);
 
         // Stop intro song audio
@@ -512,7 +528,77 @@ public class PlayerCharacterScript : MonoBehaviour
         if (intro.isPlaying) {
             intro.Stop();
         }
-        PlayerPrefs.SetInt("reloaded", 1);
+    }
+
+    // CHARACTER MENU LISTENERS
+    // Load character menu
+    void CharacterMenuButtonPressed() {
+        Debug.Log("Character Menu Button Pressed");
+        // Hide start menu panel & display menu panel
+        characterMenuPanel.SetActive(true);
+    }
+
+    // Load char1
+    void CharacterSelectedChar1() {
+        Debug.Log("Character 1 Selected");
+        PlayerPrefs.SetInt("selectedCharacter", 0);
+        // Return to main menu after selection
+        characterMenuPanel.SetActive(false);
+        setSelectedCharacter();
+    }
+
+    // Load char2
+    void CharacterSelectedChar2() {
+        Debug.Log("Character 2 Selected");
+        PlayerPrefs.SetInt("selectedCharacter", 1);
+        // Return to main menu after selection
+        characterMenuPanel.SetActive(false);
+        setSelectedCharacter();
+    }
+
+    // Load char3
+    void CharacterSelectedChar3() {
+        Debug.Log("Character 3 Selected");
+        PlayerPrefs.SetInt("selectedCharacter", 2);
+        // Return to main menu after selection
+        characterMenuPanel.SetActive(false);
+        setSelectedCharacter();
+    }
+
+    // Load char4
+    void CharacterSelectedChar4() {
+        Debug.Log("Character 4 Selected");
+        PlayerPrefs.SetInt("selectedCharacter", 3);
+        // Return to main menu after selection
+        characterMenuPanel.SetActive(false);
+        setSelectedCharacter();
+    }
+
+    // Set active character based on user input in the character menu
+    void setSelectedCharacter() {
+        int selectedChar = PlayerPrefs.GetInt("selectedCharacter");
+        char1.SetActive(false);
+        char2.SetActive(false);
+        char3.SetActive(false);
+        char4.SetActive(false);
+        switch(selectedChar) {
+          case 0:
+            char1.SetActive(true);
+            playerMesh = char1;
+            break;
+          case 1:
+            char2.SetActive(true);
+            playerMesh = char2;
+            break;
+          case 2:
+            char3.SetActive(true);
+            playerMesh = char3;
+            break;
+          case 3:
+            char4.SetActive(true);
+            playerMesh = char4;
+            break;
+        }
     }
 
     void DisplayGameOverPanel() {
@@ -528,7 +614,6 @@ public class PlayerCharacterScript : MonoBehaviour
         Debug.Log("Play again button pressed");
 
         // Reset level and start over
-        SceneManager.LoadScene(SCENE);
-        PlayerPrefs.SetInt("reloaded", 1);
+        SceneManager.LoadScene(REPLAY_SCENE);
     }
 }
