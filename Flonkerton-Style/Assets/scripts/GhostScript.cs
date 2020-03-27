@@ -15,9 +15,9 @@ public class GhostScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       Debug.Log(PlayerPrefs.GetInt("reloaded"));
+       Debug.Log(PlayerPrefs.GetInt("play"));
 	// If player reloaded the game, start ghost movement
-        if (PlayerPrefs.GetInt("reloaded") == 1) {
+        if (PlayerPrefs.GetInt("play") == 1) {
             Debug.Log("Move ghost");
 	        gameStarted = true;
         }
@@ -38,17 +38,17 @@ public class GhostScript : MonoBehaviour
 	{
 	    speed = regularSpeed;
 	}
-	else 
+	else
 	{
 	    speed = maxSpeed;
 	}
-	// Move ghost towards character 
+	// Move ghost towards character
         this.transform.position = Vector3.MoveTowards(this.transform.position, mainCharacter.transform.position, speed * Time.fixedDeltaTime);
 	// Rotate ghost so it's "looking at" the main character
 	this.transform.LookAt(mainCharacter.transform.position);
     }
-    
-    public void GameStarted() 
+
+    public void GameStarted()
     {
     Debug.Log("Game Started");
 	gameStarted = true;

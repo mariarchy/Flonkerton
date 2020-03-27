@@ -8,4 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Flonkerton_Scene.unity
     guid: 8a31dbabdecc34cd5b0da92d5892bd23
+  - enabled: 1
+    path: Assets/CharacterMenu_Scene.unity
+    guid: 09ce4333004b142129580445d3a44f97
+  - enabled: 1
+    path: Assets/Replay_Flonkerton_Scene.unity
+    guid: 74528c934e394489b9ef7e92894d17bd
   m_configObjects: {}

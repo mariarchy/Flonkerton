@@ -48,9 +48,9 @@ public class PlayerCharacterScript : MonoBehaviour
     bool gameStarted = false;
     public GameObject startPanel;
     public GameObject gameOverPanel;
+    public GameObject characterMenuPanel;
     const string SCENE = "Flonkerton_Scene";
     const string REPLAY_SCENE = "Replay_Flonkerton_Scene";
-    const string CHAR_MENU_SCENE = "CharacterMenu_Scene";
     public GameObject ghost;
 
     // GAME OBJECT TAGS
@@ -102,13 +102,12 @@ public class PlayerCharacterScript : MonoBehaviour
         HideGameOverPanel();
 
         startPanel.SetActive(true);
-        PlayerPrefs.SetInt("reloaded", 0);
+        PlayerPrefs.SetInt("play", 0);    // Disable game
         // Check if player is reloading the game or just starting it
         // Return the current Active Scene in order to get the current Scene name.
         Scene curr_scene = SceneManager.GetActiveScene();
         if (curr_scene.name == REPLAY_SCENE) {
             startPanel.SetActive(false);
-            PlayerPrefs.SetInt("reloaded", 0);
             StartButtonPressed();
         }
     }
@@ -509,6 +508,7 @@ public class PlayerCharacterScript : MonoBehaviour
     void StartButtonPressed() {
         Debug.Log("Start Button Pressed");
         gameStarted = true;
+        PlayerPrefs.SetInt("play", 1);
         startPanel.SetActive(false);
 
         // Stop intro song audio
@@ -516,28 +516,38 @@ public class PlayerCharacterScript : MonoBehaviour
         if (intro.isPlaying) {
             intro.Stop();
         }
-        PlayerPrefs.SetInt("reloaded", 1);
     }
 
     // CHARACTER MENU LISTENERS
     // Load character menu
     void CharacterMenuButtonPressed() {
         Debug.Log("Character Menu Button Pressed");
-        SceneManager.LoadScene(CHAR_MENU_SCENE);
+        // Return to main menu after selection
+        characterMenuPanel.SetActive(true);
     }
 
     // Load char1
     void CharacterSelectedChar1() {
         Debug.Log("Character 1 Selected");
-        PlayerPrefs.SetInt("selectedCharacter", 1);
-        SceneManager.LoadScene(SCENE);
+        PlayerPrefs.SetInt("selectedCharacter", 0);
+        // Return to main menu after selection
+        characterMenuPanel.SetActive(false);
     }
 
     // Load char2
     void CharacterSelectedChar2() {
         Debug.Log("Character 2 Selected");
+        PlayerPrefs.SetInt("selectedCharacter", 1);
+        // Return to main menu after selection
+        characterMenuPanel.SetActive(false);
+    }
+
+    // Load char3
+    void CharacterSelectedChar3() {
+        Debug.Log("Character 3 Selected");
         PlayerPrefs.SetInt("selectedCharacter", 2);
-        SceneManager.LoadScene(SCENE);
+        // Return to main menu after selection
+        characterMenuPanel.SetActive(false);
     }
 
     void DisplayGameOverPanel() {
@@ -554,6 +564,5 @@ public class PlayerCharacterScript : MonoBehaviour
 
         // Reset level and start over
         SceneManager.LoadScene(REPLAY_SCENE);
-        PlayerPrefs.SetInt("reloaded", 1);
     }
 }
