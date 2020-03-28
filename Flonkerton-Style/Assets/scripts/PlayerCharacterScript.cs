@@ -66,9 +66,9 @@ public class PlayerCharacterScript : MonoBehaviour
 
     // SCORE AND SCHRUTE BUCKS VARIABLES
     public int score = 0;
-    public int schruteBucks = 0;
     public Text scoreText;
     public Text schruteBucksText;
+    private int schruteBucks;
     int stripIndex = 0;
     private int furthestStrip = 0;
 
@@ -108,6 +108,12 @@ public class PlayerCharacterScript : MonoBehaviour
         HideGameOverPanel();
 
         startPanel.SetActive(true);
+
+        if (!PlayerPrefs.HasKey("schruteBucks")) {
+          PlayerPrefs.SetInt("schruteBucks", 0);    // Set schrute bucks count
+        }
+        schruteBucks = PlayerPrefs.GetInt("schruteBucks");
+        schruteBucksText.text = schruteBucks.ToString();
 
         if (!PlayerPrefs.HasKey("selectedChar")) {
           PlayerPrefs.SetInt("selectedChar", 0);    // Select default character
@@ -296,9 +302,14 @@ public class PlayerCharacterScript : MonoBehaviour
     // Checks for enemy collisions
     void OnTriggerEnter(Collider other)
     {
+        // CHARACTER HITS ENEMY - GAMEOVER
         if (other.gameObject.tag == ENEMY)
         {
             Debug.Log(other.gameObject.name);
+
+            // Store schrute bucks from game session
+            PlayerPrefs.SetInt("schruteBucks", schruteBucks);
+
             DeathAnimation();
         }
 
@@ -319,7 +330,7 @@ public class PlayerCharacterScript : MonoBehaviour
 	    Debug.Log("Collision with coin");
 	    // Update Schrute Bucks count
 	    schruteBucks += 1;
-            schruteBucksText.text = "Schrute Bucks: " + schruteBucks.ToString();
+      schruteBucksText.text = schruteBucks.ToString();
 
 	    // Play coin sound
 	    this.GetComponent<AudioSource>().PlayOneShot(coinClip);
@@ -410,7 +421,7 @@ public class PlayerCharacterScript : MonoBehaviour
         if (stripIndex > furthestStrip)
         {
           score++;
-          scoreText.text = "Score: " + score;
+          scoreText.text = score.ToString();
           furthestStrip = stripIndex;
           Debug.Log("Score is " + score);
         }
