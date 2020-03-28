@@ -896,7 +896,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1008426682}
+      - m_Target: {fileID: 565914495}
         m_MethodName: SendMessage
         m_Mode: 5
         m_Arguments:
@@ -1090,6 +1090,7 @@ GameObject:
   - component: {fileID: 565914494}
   - component: {fileID: 565914493}
   - component: {fileID: 565914492}
+  - component: {fileID: 565914495}
   m_Layer: 5
   m_Name: PanelCharMenu
   m_TagString: Untagged
@@ -1183,6 +1184,19 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &565914495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 565914490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a339512edd49a4ec299809b9653bee24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterMenuPanel: {fileID: 565914490}
 --- !u!1001 &613255432
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1968,7 +1982,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1008426682}
+      - m_Target: {fileID: 565914495}
         m_MethodName: SendMessage
         m_Mode: 5
         m_Arguments:
@@ -4065,9 +4079,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1008426682}
-        m_MethodName: SendMessage
-        m_Mode: 5
+      - m_Target: {fileID: 565914495}
+        m_MethodName: CharacterMenuButtonPressed
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4308,7 +4322,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1008426682}
+      - m_Target: {fileID: 565914495}
         m_MethodName: SendMessage
         m_Mode: 5
         m_Arguments:
@@ -4699,7 +4713,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1008426682}
+      - m_Target: {fileID: 565914495}
         m_MethodName: SendMessage
         m_Mode: 5
         m_Arguments:

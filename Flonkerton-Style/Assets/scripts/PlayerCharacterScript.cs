@@ -532,6 +532,7 @@ public class PlayerCharacterScript : MonoBehaviour
         Debug.Log("Start Button Pressed");
         gameStarted = true;
         PlayerPrefs.SetInt("play", 1);
+        setSelectedCharacter();
         startPanel.SetActive(false);
 
         // Stop intro song audio
@@ -542,49 +543,6 @@ public class PlayerCharacterScript : MonoBehaviour
     }
 
     // CHARACTER MENU LISTENERS
-    // Load character menu
-    void CharacterMenuButtonPressed() {
-        Debug.Log("Character Menu Button Pressed");
-        // Hide start menu panel & display menu panel
-        characterMenuPanel.SetActive(true);
-    }
-
-    // Load char1
-    void CharacterSelectedChar1() {
-        Debug.Log("Character 1 Selected");
-        PlayerPrefs.SetInt("selectedCharacter", 0);
-        // Return to main menu after selection
-        characterMenuPanel.SetActive(false);
-        setSelectedCharacter();
-    }
-
-    // Load char2
-    void CharacterSelectedChar2() {
-        Debug.Log("Character 2 Selected");
-        PlayerPrefs.SetInt("selectedCharacter", 1);
-        // Return to main menu after selection
-        characterMenuPanel.SetActive(false);
-        setSelectedCharacter();
-    }
-
-    // Load char3
-    void CharacterSelectedChar3() {
-        Debug.Log("Character 3 Selected");
-        PlayerPrefs.SetInt("selectedCharacter", 2);
-        // Return to main menu after selection
-        characterMenuPanel.SetActive(false);
-        setSelectedCharacter();
-    }
-
-    // Load char4
-    void CharacterSelectedChar4() {
-        Debug.Log("Character 4 Selected");
-        PlayerPrefs.SetInt("selectedCharacter", 3);
-        // Return to main menu after selection
-        characterMenuPanel.SetActive(false);
-        setSelectedCharacter();
-    }
-
     // Set active character based on user input in the character menu
     void setSelectedCharacter() {
         int selectedChar = PlayerPrefs.GetInt("selectedCharacter");
