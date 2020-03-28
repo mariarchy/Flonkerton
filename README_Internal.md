@@ -19,6 +19,11 @@ Apply the `Flonkerton_Scene` (look for `Flonkerton_Scene.unity`)
 * Do the same with `Menus-Text -> PanelGameOver`
 * **REMEMBER** to check the panels before you build/play the game!
 
+**After any SCENE changes** (excluding script changes)
+* Delete the Scene named `Replay_Flonkerton_Scene`
+* File -> Save As -> `Replay_Flonkerton_Scene`
+* File -> Build Settings -> Add Open Scene
+
 #### Build
 **File -> Build Settings**
 **File -> Build and Run**
