@@ -56,7 +56,7 @@ public class PlayerCharacterScript : MonoBehaviour
     public GameObject gameOverPanel;
     public GameObject characterMenuPanel;
     const string SCENE = "Flonkerton_Scene";
-    const string REPLAY_SCENE = "Replay_Flonkerton_Scene";
+    const string REPLAY_SCENE = "Flonkerton_Scene";
     public GameObject ghost;
 
     // GAME OBJECT TAGS
