@@ -1,18 +1,34 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class CharacterSelectionScript : MonoBehaviour
 {
     public GameObject characterMenuPanel;
+
+    [System.Serializable]
+    public class Character {
+      public string CharacterText;
+      public int Unlocked;
+      public bool IsInteractable;
+
+      public Button.ButtonClickedEvent OnClickEvent;
+
+    }
+
+    public GameObject button;
+    public List<Character> CharacterList;
+    public Transform Spacer;
+
     // Start is called before the first frame update
     void Start()
     {
 
     }
 
-    // Update is called once per frame
-    void Update()
+    void FillList()
     {
 
     }
