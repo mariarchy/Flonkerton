@@ -66,9 +66,9 @@ public class PlayerCharacterScript : MonoBehaviour
 
     // SCORE AND SCHRUTE BUCKS VARIABLES
     public int score = 0;
-    public int schruteBucks = 0;
     public Text scoreText;
     public Text schruteBucksText;
+    private int schruteBucks;
     int stripIndex = 0;
     private int furthestStrip = 0;
 
@@ -109,6 +109,12 @@ public class PlayerCharacterScript : MonoBehaviour
 
         startPanel.SetActive(true);
 
+        if (!PlayerPrefs.HasKey("schruteBucks")) {
+          PlayerPrefs.SetInt("schruteBucks", 0);    // Set schrute bucks count
+        }
+        schruteBucks = PlayerPrefs.GetInt("schruteBucks");
+        schruteBucksText.text = schruteBucks.ToString();
+
         if (!PlayerPrefs.HasKey("selectedChar")) {
           PlayerPrefs.SetInt("selectedChar", 0);    // Select default character
         }
@@ -117,8 +123,9 @@ public class PlayerCharacterScript : MonoBehaviour
         PlayerPrefs.SetInt("play", 0);            // Disable game
         // Check if player is reloading the game or just starting it
         // Return the current Active Scene in order to get the current Scene name.
-        Scene curr_scene = SceneManager.GetActiveScene();
-        if (curr_scene.name == REPLAY_SCENE) {
+        //Scene curr_scene = SceneManager.GetActiveScene();
+        int isReloaded = PlayerPrefs.GetInt("reloaded");
+        if (isReloaded == 1) {
             startPanel.SetActive(false);
             StartButtonPressed();
         }
@@ -296,9 +303,14 @@ public class PlayerCharacterScript : MonoBehaviour
     // Checks for enemy collisions
     void OnTriggerEnter(Collider other)
     {
+        // CHARACTER HITS ENEMY - GAMEOVER
         if (other.gameObject.tag == ENEMY)
         {
             Debug.Log(other.gameObject.name);
+
+            // Store schrute bucks from game session
+            PlayerPrefs.SetInt("schruteBucks", schruteBucks);
+
             DeathAnimation();
         }
 
@@ -319,7 +331,7 @@ public class PlayerCharacterScript : MonoBehaviour
 	    Debug.Log("Collision with coin");
 	    // Update Schrute Bucks count
 	    schruteBucks += 1;
-            schruteBucksText.text = "Schrute Bucks: " + schruteBucks.ToString();
+      schruteBucksText.text = schruteBucks.ToString();
 
 	    // Play coin sound
 	    this.GetComponent<AudioSource>().PlayOneShot(coinClip);
@@ -410,7 +422,7 @@ public class PlayerCharacterScript : MonoBehaviour
         if (stripIndex > furthestStrip)
         {
           score++;
-          scoreText.text = "Score: " + score;
+          scoreText.text = score.ToString();
           furthestStrip = stripIndex;
           Debug.Log("Score is " + score);
         }
@@ -521,6 +533,8 @@ public class PlayerCharacterScript : MonoBehaviour
         Debug.Log("Start Button Pressed");
         gameStarted = true;
         PlayerPrefs.SetInt("play", 1);
+        PlayerPrefs.SetInt("reloaded", 0);
+        setSelectedCharacter();
         startPanel.SetActive(false);
 
         // Stop intro song audio
@@ -531,49 +545,6 @@ public class PlayerCharacterScript : MonoBehaviour
     }
 
     // CHARACTER MENU LISTENERS
-    // Load character menu
-    void CharacterMenuButtonPressed() {
-        Debug.Log("Character Menu Button Pressed");
-        // Hide start menu panel & display menu panel
-        characterMenuPanel.SetActive(true);
-    }
-
-    // Load char1
-    void CharacterSelectedChar1() {
-        Debug.Log("Character 1 Selected");
-        PlayerPrefs.SetInt("selectedCharacter", 0);
-        // Return to main menu after selection
-        characterMenuPanel.SetActive(false);
-        setSelectedCharacter();
-    }
-
-    // Load char2
-    void CharacterSelectedChar2() {
-        Debug.Log("Character 2 Selected");
-        PlayerPrefs.SetInt("selectedCharacter", 1);
-        // Return to main menu after selection
-        characterMenuPanel.SetActive(false);
-        setSelectedCharacter();
-    }
-
-    // Load char3
-    void CharacterSelectedChar3() {
-        Debug.Log("Character 3 Selected");
-        PlayerPrefs.SetInt("selectedCharacter", 2);
-        // Return to main menu after selection
-        characterMenuPanel.SetActive(false);
-        setSelectedCharacter();
-    }
-
-    // Load char4
-    void CharacterSelectedChar4() {
-        Debug.Log("Character 4 Selected");
-        PlayerPrefs.SetInt("selectedCharacter", 3);
-        // Return to main menu after selection
-        characterMenuPanel.SetActive(false);
-        setSelectedCharacter();
-    }
-
     // Set active character based on user input in the character menu
     void setSelectedCharacter() {
         int selectedChar = PlayerPrefs.GetInt("selectedCharacter");
@@ -612,7 +583,7 @@ public class PlayerCharacterScript : MonoBehaviour
 
     void PlayAgain() {
         Debug.Log("Play again button pressed");
-
+        PlayerPrefs.SetInt("reloaded", 1);
         // Reset level and start over
         SceneManager.LoadScene(REPLAY_SCENE);
     }
