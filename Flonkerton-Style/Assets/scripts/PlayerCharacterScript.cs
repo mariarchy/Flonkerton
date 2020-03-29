@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Timers;
+using System.Globalization;
 
 public class PlayerCharacterScript : MonoBehaviour
 {
@@ -69,6 +70,8 @@ public class PlayerCharacterScript : MonoBehaviour
     public int score = 0;
     public Text scoreText;
     public Text schruteBucksText;
+    public Text highestScoreText;
+    public Text finalScore;
     private int schruteBucks;
     int stripIndex = 0;
     private int furthestStrip = 0;
@@ -117,7 +120,7 @@ public class PlayerCharacterScript : MonoBehaviour
           PlayerPrefs.SetInt("schruteBucks", 0);    // Set schrute bucks count
         }
         schruteBucks = PlayerPrefs.GetInt("schruteBucks");
-        schruteBucksText.text = schruteBucks.ToString();
+        schruteBucksText.text = "Schrute Bucks: "+ schruteBucks.ToString();
 
         if (!PlayerPrefs.HasKey("selectedChar")) {
           PlayerPrefs.SetInt("selectedChar", 0);    // Select default character
@@ -133,6 +136,8 @@ public class PlayerCharacterScript : MonoBehaviour
             startPanel.SetActive(false);
             StartButtonPressed();
         }
+
+        highestScoreText.text ="Highest Score: "+ PlayerPrefs.GetInt("highestScore", 0).ToString();
     }
 
     // Update is called once per frame
@@ -365,7 +370,7 @@ public class PlayerCharacterScript : MonoBehaviour
 	    Debug.Log("Collision with coin");
 	    // Update Schrute Bucks count
 	    schruteBucks += 1;
-      schruteBucksText.text = schruteBucks.ToString();
+      schruteBucksText.text = "Schrute Bucks: " +schruteBucks.ToString();
 
 	    // Play coin sound
 	    this.GetComponent<AudioSource>().PlayOneShot(coinClip);
@@ -456,9 +461,15 @@ public class PlayerCharacterScript : MonoBehaviour
         if (stripIndex > furthestStrip)
         {
           score++;
-          scoreText.text = score.ToString();
+          scoreText.text = "Score: "+score.ToString();
           furthestStrip = stripIndex;
           Debug.Log("Score is " + score);
+
+            if (score > PlayerPrefs.GetInt("highestScore",0))
+            {
+                PlayerPrefs.SetInt("highestScore",score);
+                highestScoreText.text = "Highest Score: " + score.ToString();
+            }
         }
 
         GameObject nextStrip = strips[stripIndex] as GameObject;
@@ -609,6 +620,18 @@ public class PlayerCharacterScript : MonoBehaviour
     void DisplayGameOverPanel() {
         gameStarted = false;
         gameOverPanel.SetActive(true);
+        if (score.Equals(PlayerPrefs.GetInt("highestScore", 0)))
+        {
+            finalScore.text = "Your Score: " + score.ToString() + "\nNEW TOP!!";
+        }
+        else if(score> PlayerPrefs.GetInt("highestScore", 0)/2)
+        {
+            finalScore.text = "Your Score: " + score.ToString() + "\nGreat Score!";
+        }
+        else
+        {
+            finalScore.text = "Your Score: " + score.ToString() + "\nSweet!";
+        }
     }
 
     void HideGameOverPanel() {
