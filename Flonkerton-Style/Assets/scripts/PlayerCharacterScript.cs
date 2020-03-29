@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Timers;
 
 public class PlayerCharacterScript : MonoBehaviour
 {
@@ -85,6 +86,9 @@ public class PlayerCharacterScript : MonoBehaviour
     private float DEATH_SCALE_Z = 0.2F;
     private float DEATH_ROTATION = -90.0F;
 
+    //PAUSE MENU VARIABLES
+    public static bool isPaused = false;
+    public GameObject pauseMenu;
     // Start is called before the first frame update
     void Start()
     {
@@ -142,6 +146,36 @@ public class PlayerCharacterScript : MonoBehaviour
         {
             return;
         }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (isPaused)
+            {
+                Resume();
+            }
+            else
+            {
+                Pause();
+            }
+        }
+
+        void Resume()
+        {
+            pauseMenu.SetActive(false);
+            Time.timeScale = 1f;
+            isPaused = false;
+        }
+
+        void Pause()
+        {
+            pauseMenu.SetActive(true);
+            Time.timeScale = 0f;
+            isPaused = true;
+        }
+
+
+
+
 
 
         // Update player coordinates for each jump type
