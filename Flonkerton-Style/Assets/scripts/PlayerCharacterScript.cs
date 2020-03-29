@@ -123,8 +123,9 @@ public class PlayerCharacterScript : MonoBehaviour
         PlayerPrefs.SetInt("play", 0);            // Disable game
         // Check if player is reloading the game or just starting it
         // Return the current Active Scene in order to get the current Scene name.
-        Scene curr_scene = SceneManager.GetActiveScene();
-        if (curr_scene.name == REPLAY_SCENE) {
+        //Scene curr_scene = SceneManager.GetActiveScene();
+        int isReloaded = PlayerPrefs.GetInt("reloaded");
+        if (isReloaded == 1) {
             startPanel.SetActive(false);
             StartButtonPressed();
         }
@@ -532,6 +533,7 @@ public class PlayerCharacterScript : MonoBehaviour
         Debug.Log("Start Button Pressed");
         gameStarted = true;
         PlayerPrefs.SetInt("play", 1);
+        PlayerPrefs.SetInt("reloaded", 0);
         setSelectedCharacter();
         startPanel.SetActive(false);
 
@@ -581,7 +583,7 @@ public class PlayerCharacterScript : MonoBehaviour
 
     void PlayAgain() {
         Debug.Log("Play again button pressed");
-
+        PlayerPrefs.SetInt("reloaded", 1);
         // Reset level and start over
         SceneManager.LoadScene(REPLAY_SCENE);
     }
