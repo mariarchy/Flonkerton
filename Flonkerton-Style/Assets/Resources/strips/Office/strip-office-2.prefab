@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2504813638675243978}
   m_Layer: 0
-  m_Name: strip-office-2 1
+  m_Name: strip-office-2
   m_TagString: Strip
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -417,7 +417,7 @@ PrefabInstance:
     - target: {fileID: 8158974069703625455, guid: fcc5604df229e6b4e959e829ec4af7ba,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -17.3
       objectReference: {fileID: 0}
     - target: {fileID: 8158974069703625455, guid: fcc5604df229e6b4e959e829ec4af7ba,
         type: 3}
@@ -717,7 +717,7 @@ PrefabInstance:
     - target: {fileID: 8158974069703625455, guid: fcc5604df229e6b4e959e829ec4af7ba,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 107.8
+      value: 98.6
       objectReference: {fileID: 0}
     - target: {fileID: 8158974069703625455, guid: fcc5604df229e6b4e959e829ec4af7ba,
         type: 3}

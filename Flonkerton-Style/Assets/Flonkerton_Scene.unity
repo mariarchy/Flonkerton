@@ -4222,6 +4222,9 @@ MonoBehaviour:
     type: 3}
   OutsideBlank: {fileID: 8331681332910224712, guid: 3f01f4de7f97dc342a5f2aafda29e062,
     type: 3}
+  OfficeStripCount: 6
+  OutsideStripCount: 14
+  WallStripCount: 1
   MaxStripSectionLength: 10
   MinStripSectionLength: 3
 --- !u!4 &1798075521
@@ -5531,6 +5534,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8360506359966468237, guid: afd88f42dfb441d448c245c7c6e3518b,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: afd88f42dfb441d448c245c7c6e3518b, type: 3}
