@@ -142,6 +142,7 @@ public class MapController : MonoBehaviour
     public float GetStripWidth(GameObject strip) {
         //Get floor width. 
         //Note this grabs the first object in the prefab. So the first object must be the floor*.
+        Debug.Log(strip.name);
         Transform grandchildTransform = strip.transform.GetChild(0).GetChild(0) as Transform;
         // Get the x coordinate (width) of the strip's mesh box
         return grandchildTransform.gameObject.GetComponent<Renderer>().bounds.size.x;
