@@ -20,4 +20,8 @@ public class MainMenuController : MonoBehaviour
     public void StartGame() {
         SceneManager.LoadScene("Flonkerton_Scene");
     }
+
+    public void StartTutorial() {
+        SceneManager.LoadScene("Tutorial_Scene");
+    }
 }

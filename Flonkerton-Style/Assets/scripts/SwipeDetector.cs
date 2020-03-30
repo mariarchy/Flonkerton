@@ -29,6 +29,9 @@ public class SwipeDetector : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		// Check if any key press events occurred 
+		DetectKeyPress();
+
 		// Mouse button down, possible chance for a swipe
 		if (Input.GetMouseButtonDown(0)) {
 			// Record start time and position
@@ -97,5 +100,24 @@ public class SwipeDetector : MonoBehaviour {
 	private void OnSwipeBottom() {
 		Debug.Log ("swipe down");
 		BroadcastMessage("SwipeDown");
+	}
+
+	private void DetectKeyPress() {
+		// Handle arrow key presses, use same messages as swiping motion
+		if (Input.GetKey(KeyCode.LeftArrow)) {
+			OnSwipeLeft();
+		}
+
+		if (Input.GetKey(KeyCode.RightArrow)) {
+			OnSwipeRight();
+		}
+
+		if (Input.GetKey(KeyCode.UpArrow)) {
+			OnSwipeTop();
+		}
+
+		if (Input.GetKey(KeyCode.DownArrow)) {
+			OnSwipeBottom();
+		}
 	}
 }

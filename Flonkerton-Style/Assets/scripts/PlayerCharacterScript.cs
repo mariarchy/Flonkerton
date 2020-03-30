@@ -574,6 +574,11 @@ public class PlayerCharacterScript : MonoBehaviour
         }
     }
 
+    public void TutorialButtonPressed() {
+        Debug.Log("Tutorial Button Pressed");
+        SceneManager.LoadScene("Tutorial_Scene");
+    }
+
     // CHARACTER MENU LISTENERS
     // Set active character based on user input in the character menu
     void setSelectedCharacter() {
