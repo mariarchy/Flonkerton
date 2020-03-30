@@ -565,6 +565,7 @@ public class PlayerCharacterScript : MonoBehaviour
         PlayerPrefs.SetInt("reloaded", 0);
         setSelectedCharacter();
         startPanel.SetActive(false);
+        HideGameOverPanel();
 
         // Stop intro song audio
         AudioSource intro = this.GetComponents<AudioSource>()[1];

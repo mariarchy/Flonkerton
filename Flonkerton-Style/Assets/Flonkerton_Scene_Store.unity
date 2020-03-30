@@ -282,8 +282,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
 --- !u!1 &328697936 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4129701692576209392, guid: 262f2a14e966a4827a2654ff4dc8c78e,
@@ -774,8 +774,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a31e5a52e65344ba1ac1acfbfc12043b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   mapController: {fileID: 0}
   CharList:
   - {fileID: 1036060138}
@@ -842,8 +842,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b46058ecad52041a6a161cf02eb95a15, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
 --- !u!82 &1008426685
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1173,8 +1173,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1077351063, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_HorizontalAxis: Horizontal
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit
@@ -1192,8 +1192,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -619905303, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
@@ -1829,8 +1829,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
 --- !u!1001 &2081479860
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2174,8 +2174,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f5e3522b666de49a88e5af28540829ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
 --- !u!1001 &1844425017090825216
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2339,37 +2339,37 @@ PrefabInstance:
     - target: {fileID: 2947463576986463408, guid: cdcc0d3a59c4c4239adab86bd8c49df0,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
+      value:
       objectReference: {fileID: 1008426682}
     - target: {fileID: 2947463577019156372, guid: cdcc0d3a59c4c4239adab86bd8c49df0,
         type: 3}
       propertyPath: CharacterList.Array.data[1].CharObject
-      value: 
+      value:
       objectReference: {fileID: 1596437401}
     - target: {fileID: 2947463577019156372, guid: cdcc0d3a59c4c4239adab86bd8c49df0,
         type: 3}
       propertyPath: CharacterList.Array.data[2].CharObject
-      value: 
+      value:
       objectReference: {fileID: 682452317}
     - target: {fileID: 2947463577019156372, guid: cdcc0d3a59c4c4239adab86bd8c49df0,
         type: 3}
       propertyPath: CharacterList.Array.data[3].CharObject
-      value: 
+      value:
       objectReference: {fileID: 1234679921}
     - target: {fileID: 2947463577019156372, guid: cdcc0d3a59c4c4239adab86bd8c49df0,
         type: 3}
       propertyPath: mainPlayer
-      value: 
+      value:
       objectReference: {fileID: 709495812}
     - target: {fileID: 2947463577162903850, guid: cdcc0d3a59c4c4239adab86bd8c49df0,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
+      value:
       objectReference: {fileID: 1008426682}
     - target: {fileID: 2947463577162903850, guid: cdcc0d3a59c4c4239adab86bd8c49df0,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
+      value:
       objectReference: {fileID: 1108304859088777656}
     - target: {fileID: 2947463577419682578, guid: cdcc0d3a59c4c4239adab86bd8c49df0,
         type: 3}
@@ -2642,7 +2642,7 @@ PrefabInstance:
     - target: {fileID: 5929614258188139795, guid: be19216d350e3426a802adf6b49167aa,
         type: 3}
       propertyPath: mainCharacter
-      value: 
+      value:
       objectReference: {fileID: 2089104105}
     - target: {fileID: 6713536246646040561, guid: be19216d350e3426a802adf6b49167aa,
         type: 3}
