@@ -51,7 +51,7 @@ BoxCollider:
   m_GameObject: {fileID: 1564669883320257388}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 35, y: 15, z: 17}
   m_Center: {x: 0, y: 7.5, z: 0}
@@ -100,7 +100,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 424030, guid: 9191797ec983b4049bad7ad0a846c1ba, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 424030, guid: 9191797ec983b4049bad7ad0a846c1ba, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -144,12 +144,17 @@ PrefabInstance:
     - target: {fileID: 35752105381604177, guid: f15f6765d78e24a8c88a3f2b08f59d3a,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 35752105381604177, guid: f15f6765d78e24a8c88a3f2b08f59d3a,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -36.1
+      value: -40.009995
+      objectReference: {fileID: 0}
+    - target: {fileID: 35752105381604177, guid: f15f6765d78e24a8c88a3f2b08f59d3a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4671130673442668444, guid: f15f6765d78e24a8c88a3f2b08f59d3a,
         type: 3}
@@ -209,7 +214,7 @@ PrefabInstance:
     - target: {fileID: 7991561888017457141, guid: f15f6765d78e24a8c88a3f2b08f59d3a,
         type: 3}
       propertyPath: m_Name
-      value: strip-road-truck-left
+      value: strip-11
       objectReference: {fileID: 0}
     - target: {fileID: 7991561888017457141, guid: f15f6765d78e24a8c88a3f2b08f59d3a,
         type: 3}

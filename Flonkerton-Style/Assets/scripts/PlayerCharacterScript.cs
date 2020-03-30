@@ -49,7 +49,7 @@ public class PlayerCharacterScript : MonoBehaviour
     public float POS_OFFSET = 2.3F;
     public float SPEED = 40;
     public float JUMP_INCREMENT = 40F;
-    public float HORIZONTAL_JUMP_DISTANCE = 7.0F;
+    public float HORIZONTAL_JUMP_DISTANCE = 10.0F;
     public GameObject boundaryLeft;
     public GameObject boundaryRight;
     public GameObject[] stripOutsidePrefabs;
