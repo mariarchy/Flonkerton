@@ -4,8 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Enemy
   - Obstacle
+  - Strip
+  - Enemy
   - Coin
   layers:
   - Default

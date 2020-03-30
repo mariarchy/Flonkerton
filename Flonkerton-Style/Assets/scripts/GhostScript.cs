@@ -8,14 +8,13 @@ public class GhostScript : MonoBehaviour
     public float speed = 3F;
     public float regularSpeed = 3F;
     public float maxSpeed = 7F;
-    public const float CLOSE_DISTANCE = 5;
+    public const float CLOSE_DISTANCE = 15;
 
     private bool gameStarted = false;
 
     // Start is called before the first frame update
     void Start()
     {
-       Debug.Log(PlayerPrefs.GetInt("play"));
 	// If player reloaded the game, start ghost movement
         if (PlayerPrefs.GetInt("play") == 1) {
             Debug.Log("Move ghost");
@@ -50,8 +49,8 @@ public class GhostScript : MonoBehaviour
 
     public void GameStarted()
     {
-    Debug.Log("Game Started");
-	gameStarted = true;
+      Debug.Log("Game Started");
+	    gameStarted = true;
     }
 
 }

@@ -8,27 +8,36 @@ using System.Globalization;
 
 public class PlayerCharacterScript : MonoBehaviour
 {
+    public MapController mapController;
+
     // GAME CHARACTER OPTIONS
-    public GameObject char1;
-    public GameObject char2;
-    public GameObject char3;
-    public GameObject char4;
+    public List<GameObject> CharList;
 
     // GAME MAP VARIABLES
     Vector3 startPosition;
     Vector3 endPosition;
-    public GameObject strip1;
-    public GameObject strip2;
-    public GameObject strip3;
-    public GameObject strip4;
-    public GameObject strip5;
-    public GameObject strip6;
-    public GameObject strip7;
-    public GameObject strip8;
-    public GameObject strip9;
-    public GameObject strip10;
-    public GameObject strip11;
-    public GameObject strip12;
+    // public GameObject strip1;
+    // public GameObject strip2;
+    // public GameObject strip3;
+    // public GameObject strip4;
+    // public GameObject strip5;
+    // public GameObject strip6;
+    // public GameObject strip7;
+    // public GameObject strip8;
+    // public GameObject strip9;
+    // public GameObject strip10;
+    // public GameObject strip11;
+    // public GameObject strip12;
+    // public GameObject strip13;
+    //
+    // public GameObject strip_office1;
+    // public GameObject strip_office2;
+    // public GameObject strip_office3;
+    //
+    // public GameObject strip_outside_wall;
+    // public GameObject strip_office_wall;
+    //public GameObject strip_outside_empty;
+    //public GameObject strip_office_empty;
 
     // PLAYER MOVEMENT VARIABLES
     bool isJumpingUp;
@@ -39,10 +48,12 @@ public class PlayerCharacterScript : MonoBehaviour
     public float POS_OFFSET = 2.3F;
     public float SPEED = 40;
     public float JUMP_INCREMENT = 40F;
-    public float HORIZONTAL_JUMP_DISTANCE = 7.0F;
+    public float HORIZONTAL_JUMP_DISTANCE = 10.0F;
     public GameObject boundaryLeft;
     public GameObject boundaryRight;
-    public GameObject[] stripPrefabs;
+    // public GameObject[] stripOutsidePrefabs;
+    // public GameObject[] stripOfficePrefabs;
+
     // TODO: rename this once characters have been changed
     public GameObject playerMesh;
 
@@ -81,8 +92,11 @@ public class PlayerCharacterScript : MonoBehaviour
     public AudioClip introClip;
     AudioSource audio;
 
-    // DEATH ANIMATION VARIABLES
+    // MAP VARIABLES
     private List<GameObject> strips;
+    private bool isOffice = false;
+
+    // DEATH ANIMATION VARIABLES
     private float midpoint;
     private bool isDead = false;
     private bool playingDeathAnimation = false;
@@ -96,21 +110,22 @@ public class PlayerCharacterScript : MonoBehaviour
     void Start()
     {
         isJumpingUp = isJumpingDown = isJumpingLeft = isJumpingRight = false;
-        strips = new List<GameObject>();
-
-        // Add all strips to List
-        strips.Add(strip1);
-        strips.Add(strip2);
-        strips.Add(strip3);
-        strips.Add(strip4);
-        strips.Add(strip5);
-        strips.Add(strip6);
-        strips.Add(strip7);
-        strips.Add(strip8);
-        strips.Add(strip9);
-        strips.Add(strip10);
-        strips.Add(strip11);
-        strips.Add(strip12);
+        // strips = new List<GameObject>();
+        //
+        // // Add all strips to List
+        // strips.Add(strip1);
+        // strips.Add(strip2);
+        // strips.Add(strip3);
+        // strips.Add(strip4);
+        // strips.Add(strip5);
+        // strips.Add(strip6);
+        // strips.Add(strip7);
+        // strips.Add(strip8);
+        // strips.Add(strip9);
+        // strips.Add(strip10);
+        // strips.Add(strip11);
+        // strips.Add(strip12);
+        // strips.Add(strip13);
 
         HideGameOverPanel();
 
@@ -132,6 +147,7 @@ public class PlayerCharacterScript : MonoBehaviour
         // Return the current Active Scene in order to get the current Scene name.
         //Scene curr_scene = SceneManager.GetActiveScene();
         int isReloaded = PlayerPrefs.GetInt("reloaded");
+        Debug.Log(isReloaded);
         if (isReloaded == 1) {
             startPanel.SetActive(false);
             StartButtonPressed();
@@ -310,34 +326,47 @@ public class PlayerCharacterScript : MonoBehaviour
         }
     }
 
-    void SpawnNewStrip()
-    {
-        // Generate a random strip type from list of unique strip types
-        int randStrip = Random.Range(0, stripPrefabs.Length);
-        GameObject stripType = stripPrefabs[randStrip] as GameObject;
+    //void SpawnNewStrip()
+    //{
+    //     Generate a random strip type from list of unique strip types
+    //    int randStrip;
+    //    GameObject stripType;
 
-        // Retrieve width of strip by accessing its grandchild's transform
-        Transform childTransform = stripType.transform.GetChild(0) as Transform;
-        Transform grandchildTransform = childTransform.GetChild(0) as Transform;
-        // Get the x coordinate (width) of the strip's mesh box
-        float width = grandchildTransform.gameObject.GetComponent<Renderer>()
-                      .bounds.size.x;
+    //    if (!isOffice)
+    //    {
+    //        randStrip = Random.Range(0, stripOutsidePrefabs.Length);
+    //        stripType = stripOutsidePrefabs[randStrip] as GameObject;
+    //    }
+    //    else {
+    //        randStrip = Random.Range(0, stripOfficePrefabs.Length);
+    //        stripType = stripOfficePrefabs[randStrip] as GameObject;
+    //    }
 
-        // Use last strip coordinates to instantiate new strip object
-        GameObject lastStrip = strips[strips.Count - 1] as GameObject;
-        // Clone last strip to instantiate new strip object
-        GameObject newStrip = Instantiate(stripType,
-                                          lastStrip.transform.position,
-                                          lastStrip.transform.rotation);
-        // Set new  strip to the next available slot in map
-        newStrip.transform.position = new Vector3(
-            newStrip.transform.position.x - width,
-            stripType.transform.position.y,
-            stripType.transform.position.z);
 
-        // Add strip to map
-        strips.Add(newStrip);
-    }
+    //     Retrieve width of strip by accessing its grandchild's transform
+    //    Transform childTransform = stripType.transform.GetChild(0) as Transform;
+    //    Transform grandchildTransform = childTransform.GetChild(0) as Transform;
+    //     Get the x coordinate (width) of the strip's mesh box
+    //    float width = grandchildTransform.gameObject.GetComponent<Renderer>()
+    //                  .bounds.size.x;
+    //    Debug.Log(width);
+
+
+    //     Use last strip coordinates to instantiate new strip object
+    //    GameObject lastStrip = strips[strips.Count - 1] as GameObject;
+    //     Clone last strip to instantiate new strip object
+    //    GameObject newStrip = Instantiate(stripType,
+    //                                      lastStrip.transform.position,
+    //                                      lastStrip.transform.rotation);
+    //     Set new  strip to the next available slot in map
+    //    newStrip.transform.position = new Vector3(
+    //        newStrip.transform.position.x - width,
+    //        stripType.transform.position.y,
+    //        stripType.transform.position.z);
+
+    //     Add strip to map
+    //    strips.Add(newStrip);
+    //}
 
     // Checks for enemy collisions
     void OnTriggerEnter(Collider other)
@@ -413,7 +442,7 @@ public class PlayerCharacterScript : MonoBehaviour
 
     void SwipeUp()
     {
-        Debug.Log("Consuming swipe up");
+        //Debug.Log("Consuming swipe up");
         if (gameStarted && !isJumpingUp)
         {
             isJumpingUp = true;
@@ -423,7 +452,7 @@ public class PlayerCharacterScript : MonoBehaviour
 
     void SwipeDown()
     {
-        Debug.Log("Consuming swipe down");
+        //Debug.Log("Consuming swipe down");
         if (gameStarted && !isJumpingDown)
         {
             isJumpingDown = true;
@@ -433,7 +462,7 @@ public class PlayerCharacterScript : MonoBehaviour
 
     void SwipeRight()
     {
-        Debug.Log("Consuming swipe right");
+        //Debug.Log("Consuming swipe right");
         if (gameStarted && !isJumpingRight)
         {
             isJumpingRight = true;
@@ -443,7 +472,7 @@ public class PlayerCharacterScript : MonoBehaviour
 
     void SwipeLeft()
     {
-        Debug.Log("Consuming swipe left");
+        //Debug.Log("Consuming swipe left");
         if (gameStarted && !isJumpingLeft)
         {
             isJumpingLeft = true;
@@ -472,7 +501,7 @@ public class PlayerCharacterScript : MonoBehaviour
             }
         }
 
-        GameObject nextStrip = strips[stripIndex] as GameObject;
+        GameObject nextStrip = mapController.GetStripAtIndex(stripIndex);
 
         // Set the start position and end position of the jump as the next strip
         // we want to jump to
@@ -489,7 +518,7 @@ public class PlayerCharacterScript : MonoBehaviour
         // Set character to face the front
         playerMesh.transform.localEulerAngles = FRONT;
 
-        SpawnNewStrip();
+        mapController.SpawnNewStrip();
 
         // Calculate distance travelled in jump
         moveBoundaryX(endPosition.x - this.transform.position.x);
@@ -511,7 +540,7 @@ public class PlayerCharacterScript : MonoBehaviour
             stripIndex--;
         }
 
-        GameObject prevStrip = strips[stripIndex] as GameObject;
+        GameObject prevStrip = mapController.GetStripAtIndex(stripIndex);
 
         // Set the start position and end position of the jump as the next strip
         // we want to jump to
@@ -576,11 +605,14 @@ public class PlayerCharacterScript : MonoBehaviour
     // Start the game and hide the start panel when button is pressed
     void StartButtonPressed() {
         Debug.Log("Start Button Pressed");
+        schruteBucks = PlayerPrefs.GetInt("schruteBucks");
+        schruteBucksText.text = schruteBucks.ToString();
         gameStarted = true;
         PlayerPrefs.SetInt("play", 1);
         PlayerPrefs.SetInt("reloaded", 0);
         setSelectedCharacter();
         startPanel.SetActive(false);
+        HideGameOverPanel();
 
         // Stop intro song audio
         AudioSource intro = this.GetComponents<AudioSource>()[1];
@@ -589,32 +621,44 @@ public class PlayerCharacterScript : MonoBehaviour
         }
     }
 
+    public void TutorialButtonPressed() {
+        Debug.Log("Tutorial Button Pressed");
+        SceneManager.LoadScene("Tutorial_Scene");
+    }
+
     // CHARACTER MENU LISTENERS
     // Set active character based on user input in the character menu
     void setSelectedCharacter() {
-        int selectedChar = PlayerPrefs.GetInt("selectedCharacter");
-        char1.SetActive(false);
-        char2.SetActive(false);
-        char3.SetActive(false);
-        char4.SetActive(false);
-        switch(selectedChar) {
-          case 0:
-            char1.SetActive(true);
-            playerMesh = char1;
-            break;
-          case 1:
-            char2.SetActive(true);
-            playerMesh = char2;
-            break;
-          case 2:
-            char3.SetActive(true);
-            playerMesh = char3;
-            break;
-          case 3:
-            char4.SetActive(true);
-            playerMesh = char4;
-            break;
+        int selectedChar = PlayerPrefs.GetInt("selectedChar");
+        foreach(var character in CharList) {
+          character.SetActive(false);
         }
+        Debug.Log(CharList.Count);
+        GameObject selectedCharacter = CharList[selectedChar];
+        selectedCharacter.SetActive(true);
+        playerMesh = selectedCharacter;
+        // char1.SetActive(false);
+        // char2.SetActive(false);
+        // char3.SetActive(false);
+        // char4.SetActive(false);
+        // switch(selectedChar) {
+        //   case 0:
+        //     char1.SetActive(true);
+        //     playerMesh = char1;
+        //     break;
+        //   case 1:
+        //     char2.SetActive(true);
+        //     playerMesh = char2;
+        //     break;
+        //   case 2:
+        //     char3.SetActive(true);
+        //     playerMesh = char3;
+        //     break;
+        //   case 3:
+        //     char4.SetActive(true);
+        //     playerMesh = char4;
+        //     break;
+        // }
     }
 
     void DisplayGameOverPanel() {
