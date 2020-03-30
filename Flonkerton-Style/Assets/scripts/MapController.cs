@@ -16,10 +16,15 @@ public class MapController : MonoBehaviour
     public GameObject OfficeBlank;
     public GameObject OutsideBlank;
 
+    public int OfficeStripCount;
+    public int OutsideStripCount;
+    public int WallStripCount;
+
+
     // Load all the strips to auto generate the map.
-    private GameObject[] OfficeStrips = new GameObject[6]; //Replace '1' with total # of prefabs, don't forget to name you prefabs like "Prefab0 - Prefab9" etc.
-    private GameObject[] OutsideStrips = new GameObject[12]; //Replace '1' with total # of prefabs, don't forget to name you prefabs like "Prefab0 - Prefab9" etc.
-    private GameObject[] WallStrips = new GameObject[1]; //Replace '1' with total # of prefabs, don't forget to name you prefabs like "Prefab0 - Prefab9" etc.
+    private GameObject[] OfficeStrips;
+    private GameObject[] OutsideStrips;
+    private GameObject[] WallStrips;
 
     // MAP VARIABLES
     private List<GameObject> MapStrips;
@@ -36,6 +41,10 @@ public class MapController : MonoBehaviour
 
     void Start()
     {
+        OfficeStrips = new GameObject[OfficeStripCount]; //Replace '1' with total # of prefabs, don't forget to name you prefabs like "Prefab0 - Prefab9" etc.
+        OutsideStrips = new GameObject[OutsideStripCount]; //Replace '1' with total # of prefabs, don't forget to name you prefabs like "Prefab0 - Prefab9" etc.
+        WallStrips = new GameObject[WallStripCount]; //Replace '1' with total # of prefabs, don't forget to name you prefabs like "Prefab0 - Prefab9" etc.
+
         // Load all the strips
         for (int p = 0; p < OfficeStrips.Length; p++) {      //load all the OFFICE strips
             OfficeStrips[p] = Resources.Load("strips/Office/strip-office-" + (p + 1)) as GameObject;
