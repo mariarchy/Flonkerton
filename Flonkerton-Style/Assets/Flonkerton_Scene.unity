@@ -2554,7 +2554,6 @@ MonoBehaviour:
   characterMenuPanel: {fileID: 565914490}
   ghost: {fileID: 1857608360}
   score: 0
-  schruteBucks: 0
   scoreText: {fileID: 1532406409}
   schruteBucksText: {fileID: 531463741}
   coinClip: {fileID: 8300000, guid: 8674d7d2a648a4c31969486a689b69e9, type: 3}
@@ -4219,6 +4218,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MarkerStrip: {fileID: 4893050869815549954}
+  OfficeBlank: {fileID: 3407531105764959080, guid: 5bb380ef0fa97734688794019f73ea4a,
+    type: 3}
+  OutsideBlank: {fileID: 8331681332910224712, guid: 3f01f4de7f97dc342a5f2aafda29e062,
+    type: 3}
   MaxStripSectionLength: 10
   MinStripSectionLength: 3
 --- !u!4 &1798075521
