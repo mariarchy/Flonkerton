@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class PlayerCharacterScript : MonoBehaviour
 {
+    public MapController mapController;
+
     // GAME CHARACTER OPTIONS
     public GameObject char1;
     public GameObject char2;
@@ -27,6 +29,16 @@ public class PlayerCharacterScript : MonoBehaviour
     public GameObject strip10;
     public GameObject strip11;
     public GameObject strip12;
+    public GameObject strip13;
+
+    public GameObject strip_office1;
+    public GameObject strip_office2;
+    public GameObject strip_office3;
+
+    public GameObject strip_outside_wall;
+    public GameObject strip_office_wall;
+    //public GameObject strip_outside_empty;
+    //public GameObject strip_office_empty;
 
     // PLAYER MOVEMENT VARIABLES
     bool isJumpingUp;
@@ -37,10 +49,12 @@ public class PlayerCharacterScript : MonoBehaviour
     public float POS_OFFSET = 2.3F;
     public float SPEED = 40;
     public float JUMP_INCREMENT = 40F;
-    public float HORIZONTAL_JUMP_DISTANCE = 7.0F;
+    public float HORIZONTAL_JUMP_DISTANCE = 10.0F;
     public GameObject boundaryLeft;
     public GameObject boundaryRight;
-    public GameObject[] stripPrefabs;
+    public GameObject[] stripOutsidePrefabs;
+    public GameObject[] stripOfficePrefabs;
+
     // TODO: rename this once characters have been changed
     public GameObject playerMesh;
 
@@ -77,8 +91,11 @@ public class PlayerCharacterScript : MonoBehaviour
     public AudioClip introClip;
     AudioSource audio;
 
-    // DEATH ANIMATION VARIABLES
+    // MAP VARIABLES
     private List<GameObject> strips;
+    private bool isOffice = false;
+
+    // DEATH ANIMATION VARIABLES
     private float midpoint;
     private bool isDead = false;
     private bool playingDeathAnimation = false;
@@ -104,6 +121,7 @@ public class PlayerCharacterScript : MonoBehaviour
         strips.Add(strip10);
         strips.Add(strip11);
         strips.Add(strip12);
+        strips.Add(strip13);
 
         HideGameOverPanel();
 
@@ -271,34 +289,47 @@ public class PlayerCharacterScript : MonoBehaviour
         }
     }
 
-    void SpawnNewStrip()
-    {
-        // Generate a random strip type from list of unique strip types
-        int randStrip = Random.Range(0, stripPrefabs.Length);
-        GameObject stripType = stripPrefabs[randStrip] as GameObject;
+    //void SpawnNewStrip()
+    //{
+    //     Generate a random strip type from list of unique strip types
+    //    int randStrip;
+    //    GameObject stripType;
 
-        // Retrieve width of strip by accessing its grandchild's transform
-        Transform childTransform = stripType.transform.GetChild(0) as Transform;
-        Transform grandchildTransform = childTransform.GetChild(0) as Transform;
-        // Get the x coordinate (width) of the strip's mesh box
-        float width = grandchildTransform.gameObject.GetComponent<Renderer>()
-                      .bounds.size.x;
+    //    if (!isOffice)
+    //    {
+    //        randStrip = Random.Range(0, stripOutsidePrefabs.Length);
+    //        stripType = stripOutsidePrefabs[randStrip] as GameObject;
+    //    }
+    //    else {
+    //        randStrip = Random.Range(0, stripOfficePrefabs.Length);
+    //        stripType = stripOfficePrefabs[randStrip] as GameObject;
+    //    }
+        
 
-        // Use last strip coordinates to instantiate new strip object
-        GameObject lastStrip = strips[strips.Count - 1] as GameObject;
-        // Clone last strip to instantiate new strip object
-        GameObject newStrip = Instantiate(stripType,
-                                          lastStrip.transform.position,
-                                          lastStrip.transform.rotation);
-        // Set new  strip to the next available slot in map
-        newStrip.transform.position = new Vector3(
-            newStrip.transform.position.x - width,
-            stripType.transform.position.y,
-            stripType.transform.position.z);
+    //     Retrieve width of strip by accessing its grandchild's transform
+    //    Transform childTransform = stripType.transform.GetChild(0) as Transform;
+    //    Transform grandchildTransform = childTransform.GetChild(0) as Transform;
+    //     Get the x coordinate (width) of the strip's mesh box
+    //    float width = grandchildTransform.gameObject.GetComponent<Renderer>()
+    //                  .bounds.size.x;
+    //    Debug.Log(width);
 
-        // Add strip to map
-        strips.Add(newStrip);
-    }
+
+    //     Use last strip coordinates to instantiate new strip object
+    //    GameObject lastStrip = strips[strips.Count - 1] as GameObject;
+    //     Clone last strip to instantiate new strip object
+    //    GameObject newStrip = Instantiate(stripType,
+    //                                      lastStrip.transform.position,
+    //                                      lastStrip.transform.rotation);
+    //     Set new  strip to the next available slot in map
+    //    newStrip.transform.position = new Vector3(
+    //        newStrip.transform.position.x - width,
+    //        stripType.transform.position.y,
+    //        stripType.transform.position.z);
+
+    //     Add strip to map
+    //    strips.Add(newStrip);
+    //}
 
     // Checks for enemy collisions
     void OnTriggerEnter(Collider other)
@@ -374,7 +405,7 @@ public class PlayerCharacterScript : MonoBehaviour
 
     void SwipeUp()
     {
-        Debug.Log("Consuming swipe up");
+        //Debug.Log("Consuming swipe up");
         if (gameStarted && !isJumpingUp)
         {
             isJumpingUp = true;
@@ -384,7 +415,7 @@ public class PlayerCharacterScript : MonoBehaviour
 
     void SwipeDown()
     {
-        Debug.Log("Consuming swipe down");
+        //Debug.Log("Consuming swipe down");
         if (gameStarted && !isJumpingDown)
         {
             isJumpingDown = true;
@@ -394,7 +425,7 @@ public class PlayerCharacterScript : MonoBehaviour
 
     void SwipeRight()
     {
-        Debug.Log("Consuming swipe right");
+        //Debug.Log("Consuming swipe right");
         if (gameStarted && !isJumpingRight)
         {
             isJumpingRight = true;
@@ -404,7 +435,7 @@ public class PlayerCharacterScript : MonoBehaviour
 
     void SwipeLeft()
     {
-        Debug.Log("Consuming swipe left");
+        //Debug.Log("Consuming swipe left");
         if (gameStarted && !isJumpingLeft)
         {
             isJumpingLeft = true;
@@ -424,10 +455,10 @@ public class PlayerCharacterScript : MonoBehaviour
           score++;
           scoreText.text = score.ToString();
           furthestStrip = stripIndex;
-          Debug.Log("Score is " + score);
+          //Debug.Log("Score is " + score);
         }
 
-        GameObject nextStrip = strips[stripIndex] as GameObject;
+        GameObject nextStrip = mapController.GetStripAtIndex(stripIndex);
 
         // Set the start position and end position of the jump as the next strip
         // we want to jump to
@@ -444,7 +475,7 @@ public class PlayerCharacterScript : MonoBehaviour
         // Set character to face the front
         playerMesh.transform.localEulerAngles = FRONT;
 
-        SpawnNewStrip();
+        mapController.SpawnNewStrip();
 
         // Calculate distance travelled in jump
         moveBoundaryX(endPosition.x - this.transform.position.x);
@@ -466,7 +497,7 @@ public class PlayerCharacterScript : MonoBehaviour
             stripIndex--;
         }
 
-        GameObject prevStrip = strips[stripIndex] as GameObject;
+        GameObject prevStrip = mapController.GetStripAtIndex(stripIndex);
 
         // Set the start position and end position of the jump as the next strip
         // we want to jump to
