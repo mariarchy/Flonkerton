@@ -4,10 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Enemy
   - Obstacle
+  - Strip
+  - Enemy
   - Coin
-  - CharacterButton
   layers:
   - Default
   - TransparentFX
