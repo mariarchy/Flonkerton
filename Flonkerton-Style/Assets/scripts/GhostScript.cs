@@ -15,7 +15,6 @@ public class GhostScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       Debug.Log(PlayerPrefs.GetInt("play"));
 	// If player reloaded the game, start ghost movement
         if (PlayerPrefs.GetInt("play") == 1) {
             Debug.Log("Move ghost");
@@ -50,8 +49,8 @@ public class GhostScript : MonoBehaviour
 
     public void GameStarted()
     {
-    Debug.Log("Game Started");
-	gameStarted = true;
+      Debug.Log("Game Started");
+	    gameStarted = true;
     }
 
 }

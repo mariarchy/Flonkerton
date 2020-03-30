@@ -7,10 +7,7 @@ using UnityEngine.SceneManagement;
 public class PlayerCharacterScript : MonoBehaviour
 {
     // GAME CHARACTER OPTIONS
-    public GameObject char1;
-    public GameObject char2;
-    public GameObject char3;
-    public GameObject char4;
+    public List<GameObject> CharList;
 
     // GAME MAP VARIABLES
     Vector3 startPosition;
@@ -55,8 +52,8 @@ public class PlayerCharacterScript : MonoBehaviour
     public GameObject startPanel;
     public GameObject gameOverPanel;
     public GameObject characterMenuPanel;
-    const string SCENE = "Flonkerton_Scene";
-    const string REPLAY_SCENE = "Flonkerton_Scene";
+    const string SCENE = "Flonkerton_Scene_New";
+    const string REPLAY_SCENE = "Flonkerton_Scene_New";
     public GameObject ghost;
 
     // GAME OBJECT TAGS
@@ -112,8 +109,6 @@ public class PlayerCharacterScript : MonoBehaviour
         if (!PlayerPrefs.HasKey("schruteBucks")) {
           PlayerPrefs.SetInt("schruteBucks", 0);    // Set schrute bucks count
         }
-        schruteBucks = PlayerPrefs.GetInt("schruteBucks");
-        schruteBucksText.text = schruteBucks.ToString();
 
         if (!PlayerPrefs.HasKey("selectedChar")) {
           PlayerPrefs.SetInt("selectedChar", 0);    // Select default character
@@ -125,6 +120,7 @@ public class PlayerCharacterScript : MonoBehaviour
         // Return the current Active Scene in order to get the current Scene name.
         //Scene curr_scene = SceneManager.GetActiveScene();
         int isReloaded = PlayerPrefs.GetInt("reloaded");
+        Debug.Log(isReloaded);
         if (isReloaded == 1) {
             startPanel.SetActive(false);
             StartButtonPressed();
@@ -531,6 +527,8 @@ public class PlayerCharacterScript : MonoBehaviour
     // Start the game and hide the start panel when button is pressed
     void StartButtonPressed() {
         Debug.Log("Start Button Pressed");
+        schruteBucks = PlayerPrefs.GetInt("schruteBucks");
+        schruteBucksText.text = schruteBucks.ToString();
         gameStarted = true;
         PlayerPrefs.SetInt("play", 1);
         PlayerPrefs.SetInt("reloaded", 0);
@@ -547,29 +545,36 @@ public class PlayerCharacterScript : MonoBehaviour
     // CHARACTER MENU LISTENERS
     // Set active character based on user input in the character menu
     void setSelectedCharacter() {
-        int selectedChar = PlayerPrefs.GetInt("selectedCharacter");
-        char1.SetActive(false);
-        char2.SetActive(false);
-        char3.SetActive(false);
-        char4.SetActive(false);
-        switch(selectedChar) {
-          case 0:
-            char1.SetActive(true);
-            playerMesh = char1;
-            break;
-          case 1:
-            char2.SetActive(true);
-            playerMesh = char2;
-            break;
-          case 2:
-            char3.SetActive(true);
-            playerMesh = char3;
-            break;
-          case 3:
-            char4.SetActive(true);
-            playerMesh = char4;
-            break;
+        int selectedChar = PlayerPrefs.GetInt("selectedChar");
+        foreach(var character in CharList) {
+          character.SetActive(false);
         }
+        Debug.Log(CharList.Count);
+        GameObject selectedCharacter = CharList[selectedChar];
+        selectedCharacter.SetActive(true);
+        playerMesh = selectedCharacter;
+        // char1.SetActive(false);
+        // char2.SetActive(false);
+        // char3.SetActive(false);
+        // char4.SetActive(false);
+        // switch(selectedChar) {
+        //   case 0:
+        //     char1.SetActive(true);
+        //     playerMesh = char1;
+        //     break;
+        //   case 1:
+        //     char2.SetActive(true);
+        //     playerMesh = char2;
+        //     break;
+        //   case 2:
+        //     char3.SetActive(true);
+        //     playerMesh = char3;
+        //     break;
+        //   case 3:
+        //     char4.SetActive(true);
+        //     playerMesh = char4;
+        //     break;
+        // }
     }
 
     void DisplayGameOverPanel() {
