@@ -8,7 +8,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5012615115768932966}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.8000001, y: 3.9, z: 1.8000001}
@@ -51,6 +51,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 9085081912951995461}
     m_Modifications:
+    - target: {fileID: 100000, guid: 1bc8083543c8d82449594b1fc3cb941c, type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
+      objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: 1bc8083543c8d82449594b1fc3cb941c, type: 3}
       propertyPath: m_Name
       value: plantv2
