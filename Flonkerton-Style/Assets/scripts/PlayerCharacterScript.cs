@@ -345,10 +345,11 @@ public class PlayerCharacterScript : MonoBehaviour
         }
     }
 
+
     void SwipeUp()
     {
         //Debug.Log("Consuming swipe up");
-        if (gameStarted && !isJumpingUp)
+        if (gameStarted && !isJumpingUp && !isJumpingDown && !isJumpingLeft && !isJumpingRight )
         {
             isJumpingUp = true;
             JumpUp();
@@ -358,7 +359,7 @@ public class PlayerCharacterScript : MonoBehaviour
     void SwipeDown()
     {
         //Debug.Log("Consuming swipe down");
-        if (gameStarted && !isJumpingDown)
+        if (gameStarted && !isJumpingUp && !isJumpingDown && !isJumpingLeft && !isJumpingRight)
         {
             isJumpingDown = true;
             JumpDown();
@@ -368,7 +369,7 @@ public class PlayerCharacterScript : MonoBehaviour
     void SwipeRight()
     {
         //Debug.Log("Consuming swipe right");
-        if (gameStarted && !isJumpingRight)
+        if (gameStarted && !isJumpingUp && !isJumpingDown && !isJumpingLeft && !isJumpingRight)
         {
             isJumpingRight = true;
             JumpRight();
@@ -378,7 +379,7 @@ public class PlayerCharacterScript : MonoBehaviour
     void SwipeLeft()
     {
         //Debug.Log("Consuming swipe left");
-        if (gameStarted && !isJumpingLeft)
+        if (gameStarted && !isJumpingUp && !isJumpingDown && !isJumpingLeft && !isJumpingRight)
         {
             isJumpingLeft = true;
             JumpLeft();
