@@ -562,28 +562,6 @@ public class PlayerCharacterScript : MonoBehaviour
         GameObject selectedCharacter = CharList[selectedChar];
         selectedCharacter.SetActive(true);
         playerMesh = selectedCharacter;
-        // char1.SetActive(false);
-        // char2.SetActive(false);
-        // char3.SetActive(false);
-        // char4.SetActive(false);
-        // switch(selectedChar) {
-        //   case 0:
-        //     char1.SetActive(true);
-        //     playerMesh = char1;
-        //     break;
-        //   case 1:
-        //     char2.SetActive(true);
-        //     playerMesh = char2;
-        //     break;
-        //   case 2:
-        //     char3.SetActive(true);
-        //     playerMesh = char3;
-        //     break;
-        //   case 3:
-        //     char4.SetActive(true);
-        //     playerMesh = char4;
-        //     break;
-        // }
     }
 
     void DisplayGameOverPanel() {
@@ -591,15 +569,11 @@ public class PlayerCharacterScript : MonoBehaviour
         gameOverPanel.SetActive(true);
         if (score.Equals(PlayerPrefs.GetInt("highestScore", 0)))
         {
-            finalScore.text = "Your Score: " + score.ToString() + "\nNEW TOP!!";
-        }
-        else if(score> PlayerPrefs.GetInt("highestScore", 0)/2)
-        {
-            finalScore.text = "Your Score: " + score.ToString() + "\nGreat Score!";
+            finalScore.text = "Your Score: " + score.ToString() + "NEW TOP!";
         }
         else
         {
-            finalScore.text = "Your Score: " + score.ToString() + "\nSweet!";
+            finalScore.text = "Your Score: " + score.ToString();
         }
     }
 
@@ -612,5 +586,10 @@ public class PlayerCharacterScript : MonoBehaviour
         PlayerPrefs.SetInt("reloaded", 1);
         // Reset level and start over
         SceneManager.LoadScene(REPLAY_SCENE);
+    }
+
+    void LoadMainMenu() {
+        PlayerPrefs.SetInt("reloaded", 0);
+        SceneManager.LoadScene(SCENE);
     }
 }
