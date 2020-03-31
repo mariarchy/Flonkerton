@@ -14,10 +14,10 @@ _Built with Unity 5_
 To execute the program, run the application **Flonkerton** in the main directory of the assignment  
 
 ## New Features
-**Tutorial**
+### Tutorial
 * A tutorial to help you play Flonkerton!
-**Character Shop**
+### Character Shop
 * Unlock new Office characters with the Schrute Bucks you earn!
 * Select different Office characters to play
-**Redesigned Map and Characters**
+### Redesigned Map and Characters**
 * Check out our newly designed map and character!
