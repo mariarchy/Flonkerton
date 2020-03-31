@@ -301,7 +301,7 @@ public class PlayerCharacterScript : MonoBehaviour
 
                 if (stripIndex == furthestStrip)
                 {
-                    score--;
+                    //score--;
                     scoreText.text = score.ToString();
                     furthestStrip = stripIndex;
                 }

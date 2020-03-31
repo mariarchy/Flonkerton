@@ -11,7 +11,7 @@ _Built with Unity 5_
 * Don't let Assistant to the Regional Manager Dwight catch you!
 
 ## Execute the Program
-To execute the program, run the application **Flonkerton** in the main directory of the assignment  
+To execute the program, run the application **Flonkerton** in the FlonkertonGame directory of the assignment  
 
 ## New Features
 ### Tutorial
