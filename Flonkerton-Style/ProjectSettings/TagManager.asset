@@ -8,6 +8,8 @@ TagManager:
   - Strip
   - Enemy
   - Coin
+  - CharacterButton
+  - ScoreText
   layers:
   - Default
   - TransparentFX

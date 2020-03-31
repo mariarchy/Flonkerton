@@ -42,7 +42,7 @@ public class GhostScript : MonoBehaviour
 	    speed = maxSpeed;
 	}
 	// Move ghost towards character
-        this.transform.position = Vector3.MoveTowards(this.transform.position, mainCharacter.transform.position, speed * Time.fixedDeltaTime);
+        this.transform.position = Vector3.MoveTowards(this.transform.position, mainCharacter.transform.position, speed * Time.deltaTime);
 	// Rotate ghost so it's "looking at" the main character
 	this.transform.LookAt(mainCharacter.transform.position);
     }
