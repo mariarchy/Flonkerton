@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 1498715757744419095}
   m_Layer: 0
   m_Name: Chili
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -54,6 +54,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 4221ef1a8237a5446bd172549972e998, type: 3}
       propertyPath: m_Name
       value: chili
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 4221ef1a8237a5446bd172549972e998, type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 4221ef1a8237a5446bd172549972e998, type: 3}
       propertyPath: m_LocalPosition.x
