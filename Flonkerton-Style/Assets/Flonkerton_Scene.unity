@@ -112,6 +112,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!224 &53163366 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 4968909985758734288, guid: 6794861d05e414f80887fa09b8d64fc1,
+    type: 3}
+  m_PrefabInstance: {fileID: 7787396449838586094}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &56792981
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -390,6 +396,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f15f6765d78e24a8c88a3f2b08f59d3a, type: 3}
+--- !u!1 &528712315 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4968909984818287930, guid: 6794861d05e414f80887fa09b8d64fc1,
+    type: 3}
+  m_PrefabInstance: {fileID: 7787396449838586094}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &709495812
 GameObject:
   m_ObjectHideFlags: 0
@@ -446,6 +458,24 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4110443178015928, guid: f77f2a61eadb34c1c969e9c669fa6667,
     type: 3}
   m_PrefabInstance: {fileID: 1103162464}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &830799403 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4968909984893296347, guid: 6794861d05e414f80887fa09b8d64fc1,
+    type: 3}
+  m_PrefabInstance: {fileID: 7787396449838586094}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &891329486 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6603628832256458035, guid: 56044629c0c27c94d83de78392cda410,
+    type: 3}
+  m_PrefabInstance: {fileID: 56792981}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &902089157
 PrefabInstance:
@@ -1805,7 +1835,7 @@ MonoBehaviour:
     type: 3}
   OutsideBlank: {fileID: 8331681332910224712, guid: 3f01f4de7f97dc342a5f2aafda29e062,
     type: 3}
-  OfficeStripCount: 6
+  OfficeStripCount: 14
   OutsideStripCount: 14
   WallStripCount: 1
   MaxStripSectionLength: 10
@@ -1972,6 +2002,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9775a405978e3442ab4305cb7b010348, type: 3}
+--- !u!1 &1965948758 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4968909986310292222, guid: 6794861d05e414f80887fa09b8d64fc1,
+    type: 3}
+  m_PrefabInstance: {fileID: 7787396449838586094}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2000850741
 GameObject:
   m_ObjectHideFlags: 0
@@ -4112,6 +4148,84 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4968909985821827432, guid: 6794861d05e414f80887fa09b8d64fc1,
+        type: 3}
+      propertyPath: CharacterList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4968909985821827432, guid: 6794861d05e414f80887fa09b8d64fc1,
+        type: 3}
+      propertyPath: CharacterMenuPanel
+      value: 
+      objectReference: {fileID: 2947463577426261485}
+    - target: {fileID: 4968909985821827432, guid: 6794861d05e414f80887fa09b8d64fc1,
+        type: 3}
+      propertyPath: InvalidPurchasePanel
+      value: 
+      objectReference: {fileID: 1965948758}
+    - target: {fileID: 4968909985821827432, guid: 6794861d05e414f80887fa09b8d64fc1,
+        type: 3}
+      propertyPath: ConfirmationPurchasePanel
+      value: 
+      objectReference: {fileID: 528712315}
+    - target: {fileID: 4968909985821827432, guid: 6794861d05e414f80887fa09b8d64fc1,
+        type: 3}
+      propertyPath: SchruteBucksText
+      value: 
+      objectReference: {fileID: 830799403}
+    - target: {fileID: 4968909985821827432, guid: 6794861d05e414f80887fa09b8d64fc1,
+        type: 3}
+      propertyPath: buttonPrefab
+      value: 
+      objectReference: {fileID: 2832175448262952192, guid: 1ebf2a47fdc724a4dbe7990225088e77,
+        type: 3}
+    - target: {fileID: 4968909985821827432, guid: 6794861d05e414f80887fa09b8d64fc1,
+        type: 3}
+      propertyPath: Spacer
+      value: 
+      objectReference: {fileID: 53163366}
+    - target: {fileID: 4968909985821827432, guid: 6794861d05e414f80887fa09b8d64fc1,
+        type: 3}
+      propertyPath: mainPlayer
+      value: 
+      objectReference: {fileID: 709495812}
+    - target: {fileID: 4968909985821827432, guid: 6794861d05e414f80887fa09b8d64fc1,
+        type: 3}
+      propertyPath: CharacterList.Array.data[0].Name
+      value: Michael
+      objectReference: {fileID: 0}
+    - target: {fileID: 4968909985821827432, guid: 6794861d05e414f80887fa09b8d64fc1,
+        type: 3}
+      propertyPath: CharacterList.Array.data[0].Unlocked
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4968909985821827432, guid: 6794861d05e414f80887fa09b8d64fc1,
+        type: 3}
+      propertyPath: CharacterList.Array.data[0].IsInteractable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4968909985821827432, guid: 6794861d05e414f80887fa09b8d64fc1,
+        type: 3}
+      propertyPath: CharacterList.Array.data[0].CharImage
+      value: 
+      objectReference: {fileID: 21300000, guid: dd12ff2fa9af64dd68732caebba1dcd0,
+        type: 3}
+    - target: {fileID: 4968909985821827432, guid: 6794861d05e414f80887fa09b8d64fc1,
+        type: 3}
+      propertyPath: CharacterList.Array.data[0].CharImageOutline
+      value: 
+      objectReference: {fileID: 21300000, guid: 32339a73f357e43baa4bb8a32f8e3553,
+        type: 3}
+    - target: {fileID: 4968909985821827432, guid: 6794861d05e414f80887fa09b8d64fc1,
+        type: 3}
+      propertyPath: CharacterList.Array.data[0].CharObject
+      value: 
+      objectReference: {fileID: 891329486}
+    - target: {fileID: 4968909985821827432, guid: 6794861d05e414f80887fa09b8d64fc1,
+        type: 3}
+      propertyPath: CharacterList.Array.data[0].Cost
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6794861d05e414f80887fa09b8d64fc1, type: 3}
 --- !u!4 &7913687095341351019
@@ -4145,6 +4259,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Strip
+      objectReference: {fileID: 0}
+    - target: {fileID: 2321046077439875762, guid: e0307a917cade4f37bd8c878c9c9dbb4,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3338457978945465005, guid: e0307a917cade4f37bd8c878c9c9dbb4,
         type: 3}
