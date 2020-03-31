@@ -180,25 +180,6 @@ public class PlayerCharacterScript : MonoBehaviour
             }
         }
 
-        void Resume()
-        {
-            pauseMenu.SetActive(false);
-            Time.timeScale = 1f;
-            isPaused = false;
-        }
-
-        void Pause()
-        {
-            pauseMenu.SetActive(true);
-            Time.timeScale = 0f;
-            isPaused = true;
-        }
-
-
-
-
-
-
         // Update player coordinates for each jump type
         if (isJumpingUp)
         {
@@ -619,6 +600,21 @@ public class PlayerCharacterScript : MonoBehaviour
         if (intro.isPlaying) {
             intro.Stop();
         }
+    }
+
+    void Resume()
+    {
+        Debug.Log("Resuming");
+        pauseMenu.SetActive(false);
+        Time.timeScale = 1f;
+        isPaused = false;
+    }
+
+    void Pause()
+    {
+        pauseMenu.SetActive(true);
+        Time.timeScale = 0f;
+        isPaused = true;
     }
 
     public void TutorialButtonPressed() {
