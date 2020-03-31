@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Timers;
+using System.Globalization;
 
 public class PlayerCharacterScript : MonoBehaviour
 {
@@ -28,8 +30,6 @@ public class PlayerCharacterScript : MonoBehaviour
     public float HORIZONTAL_JUMP_DISTANCE = 10.0F;
     public GameObject boundaryLeft;
     public GameObject boundaryRight;
-    // public GameObject[] stripOutsidePrefabs;
-    // public GameObject[] stripOfficePrefabs;
 
     // TODO: rename this once characters have been changed
     public GameObject playerMesh;
@@ -56,8 +56,14 @@ public class PlayerCharacterScript : MonoBehaviour
 
     // SCORE AND SCHRUTE BUCKS VARIABLES
     public int score = 0;
+    // TODO: Update these via the Object tag
     public Text scoreText;
+    public Text scoreTextOutline;
     public Text schruteBucksText;
+    public Text schruteBucksTextOutline;
+    public Text highScoreText;
+    public Text highScoreOutline;
+    public Text finalScore;
     private int schruteBucks;
     int stripIndex = 0;
     private int furthestStrip = 0;
@@ -78,6 +84,9 @@ public class PlayerCharacterScript : MonoBehaviour
     private float DEATH_SCALE_Z = 0.2F;
     private float DEATH_ROTATION = -90.0F;
 
+    //PAUSE MENU VARIABLES
+    public static bool isPaused = false;
+    public GameObject pauseMenu;
     // Start is called before the first frame update
     void Start()
     {
@@ -90,6 +99,10 @@ public class PlayerCharacterScript : MonoBehaviour
         if (!PlayerPrefs.HasKey("schruteBucks")) {
           PlayerPrefs.SetInt("schruteBucks", 0);    // Set schrute bucks count
         }
+        // Update Schrute Bucks value
+        schruteBucks = PlayerPrefs.GetInt("schruteBucks");
+        schruteBucksText.text = schruteBucks.ToString();
+        schruteBucksTextOutline.text = schruteBucksText.text;
 
         if (!PlayerPrefs.HasKey("selectedChar")) {
           PlayerPrefs.SetInt("selectedChar", 0);    // Select default character
@@ -98,14 +111,15 @@ public class PlayerCharacterScript : MonoBehaviour
 
         PlayerPrefs.SetInt("play", 0);            // Disable game
         // Check if player is reloading the game or just starting it
-        // Return the current Active Scene in order to get the current Scene name.
-        //Scene curr_scene = SceneManager.GetActiveScene();
         int isReloaded = PlayerPrefs.GetInt("reloaded");
         Debug.Log(isReloaded);
         if (isReloaded == 1) {
             startPanel.SetActive(false);
             StartButtonPressed();
         }
+
+        highScoreText.text = PlayerPrefs.GetInt("highestScore").ToString();
+        highScoreOutline.text = PlayerPrefs.GetInt("highestScore").ToString();
     }
 
     // Update is called once per frame
@@ -120,11 +134,18 @@ public class PlayerCharacterScript : MonoBehaviour
             return;
         }
 
-        //if (isRevertingMove) {
-        //    if (this.transform.position.y == startPosition.y) {
-        //        isRevertingMove = false;
-        //    }
-        //}
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (isPaused)
+            {
+                Resume();
+            }
+            else
+            {
+                Pause();
+            }
+        }
+
         // Update player coordinates for each jump type
         if (isJumpingUp)
         {
@@ -252,8 +273,6 @@ public class PlayerCharacterScript : MonoBehaviour
         }
     }
 
-
-
     // Checks for enemy collisions
     void OnTriggerEnter(Collider other)
     {
@@ -312,6 +331,7 @@ public class PlayerCharacterScript : MonoBehaviour
 	    // Update Schrute Bucks count
 	    schruteBucks += 1;
       schruteBucksText.text = schruteBucks.ToString();
+      schruteBucksTextOutline.text = schruteBucksText.text;
 
 	    // Play coin sound
 	    this.GetComponent<AudioSource>().PlayOneShot(coinClip);
@@ -404,8 +424,17 @@ public class PlayerCharacterScript : MonoBehaviour
         {
           score++;
           scoreText.text = score.ToString();
+          scoreTextOutline.text = scoreText.text;
           furthestStrip = stripIndex;
-          //Debug.Log("Score is " + score);
+
+          // Update high score if needed
+          if (score > PlayerPrefs.GetInt("highestScore",0))
+          {
+              PlayerPrefs.SetInt("highestScore",score);
+              // Update high score text
+              highScoreText.text = score.ToString() + " !";
+              highScoreOutline.text = highScoreText.text + " !";
+          }
         }
 
         GameObject nextStrip = mapController.GetStripAtIndex(stripIndex);
@@ -512,8 +541,10 @@ public class PlayerCharacterScript : MonoBehaviour
     // Start the game and hide the start panel when button is pressed
     void StartButtonPressed() {
         Debug.Log("Start Button Pressed");
+        // Update Schrute bucks count
         schruteBucks = PlayerPrefs.GetInt("schruteBucks");
         schruteBucksText.text = schruteBucks.ToString();
+        schruteBucksTextOutline.text = schruteBucksText.text;
         gameStarted = true;
         PlayerPrefs.SetInt("play", 1);
         PlayerPrefs.SetInt("reloaded", 0);
@@ -526,6 +557,21 @@ public class PlayerCharacterScript : MonoBehaviour
         if (intro.isPlaying) {
             intro.Stop();
         }
+    }
+
+    void Resume()
+    {
+        Debug.Log("Resuming");
+        pauseMenu.SetActive(false);
+        Time.timeScale = 1f;
+        isPaused = false;
+    }
+
+    void Pause()
+    {
+        pauseMenu.SetActive(true);
+        Time.timeScale = 0f;
+        isPaused = true;
     }
 
     public void TutorialButtonPressed() {
@@ -544,33 +590,19 @@ public class PlayerCharacterScript : MonoBehaviour
         GameObject selectedCharacter = CharList[selectedChar];
         selectedCharacter.SetActive(true);
         playerMesh = selectedCharacter;
-        // char1.SetActive(false);
-        // char2.SetActive(false);
-        // char3.SetActive(false);
-        // char4.SetActive(false);
-        // switch(selectedChar) {
-        //   case 0:
-        //     char1.SetActive(true);
-        //     playerMesh = char1;
-        //     break;
-        //   case 1:
-        //     char2.SetActive(true);
-        //     playerMesh = char2;
-        //     break;
-        //   case 2:
-        //     char3.SetActive(true);
-        //     playerMesh = char3;
-        //     break;
-        //   case 3:
-        //     char4.SetActive(true);
-        //     playerMesh = char4;
-        //     break;
-        // }
     }
 
     void DisplayGameOverPanel() {
         gameStarted = false;
         gameOverPanel.SetActive(true);
+        if (score.Equals(PlayerPrefs.GetInt("highestScore", 0)))
+        {
+            finalScore.text = "Your Score: " + score.ToString() + " NEW HIGH SCORE!";
+        }
+        else
+        {
+            finalScore.text = "Your Score: " + score.ToString();
+        }
     }
 
     void HideGameOverPanel() {
@@ -582,5 +614,10 @@ public class PlayerCharacterScript : MonoBehaviour
         PlayerPrefs.SetInt("reloaded", 1);
         // Reset level and start over
         SceneManager.LoadScene(REPLAY_SCENE);
+    }
+
+    void LoadMainMenu() {
+        PlayerPrefs.SetInt("reloaded", 0);
+        SceneManager.LoadScene(SCENE);
     }
 }

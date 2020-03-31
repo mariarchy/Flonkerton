@@ -9,9 +9,6 @@ EditorBuildSettings:
     path: Assets/Flonkerton_Scene.unity
     guid: c87770562e50a4198b63381b61672287
   - enabled: 1
-    path: Assets/Flonkerton_Scene_Store.unity
-    guid: 3883a054049624c90ba7e61e0da05a2a
-  - enabled: 1
     path: Assets/Tutorial_Scene.unity
     guid: 4e852d95824ee404399106c47703ab1d
   m_configObjects: {}
