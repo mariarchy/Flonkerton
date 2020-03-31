@@ -22,6 +22,7 @@ public class PlayerCharacterScript : MonoBehaviour
     bool isJumpingDown;
     bool isJumpingRight;
     bool isJumpingLeft;
+    bool isRevertingMove;
 
     public float POS_OFFSET = 2.3F;
     public float SPEED = 40;
@@ -89,7 +90,7 @@ public class PlayerCharacterScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        isJumpingUp = isJumpingDown = isJumpingLeft = isJumpingRight = false;
+        isRevertingMove = isJumpingUp = isJumpingDown = isJumpingLeft = isJumpingRight = false;
 
         HideGameOverPanel();
 
@@ -278,7 +279,7 @@ public class PlayerCharacterScript : MonoBehaviour
         // CHARACTER HITS ENEMY - GAMEOVER
         if (other.gameObject.tag == ENEMY)
         {
-            Debug.Log(other.gameObject.name);
+            Debug.Log("You were killed by " + other.gameObject.name);
 
             // Store schrute bucks from game session
             PlayerPrefs.SetInt("schruteBucks", schruteBucks);
@@ -288,14 +289,40 @@ public class PlayerCharacterScript : MonoBehaviour
 
         if (other.gameObject.tag == OBSTACLE)
         {
-            Debug.Log("Collision with obstacle has occurred");
+            Debug.Log("Collision with obstacle has occurred : " + other.gameObject.name);
             // Reset values using offset so player stays in place
-            this.transform.position = new Vector3(
-                this.transform.position.x,
-                startPosition.y,
-                this.transform.position.z);
 
-            isJumpingUp = isJumpingDown = isJumpingLeft = isJumpingRight = false;
+            //SWAP JUMPS TO JUMP BACK TO PREVIOUS LOCATION.
+            endPosition = startPosition;
+
+            if (isJumpingUp) {
+                isJumpingUp = false;
+                isJumpingDown = true;
+
+                if (stripIndex == furthestStrip)
+                {
+                    score--;
+                    scoreText.text = score.ToString();
+                    furthestStrip = stripIndex;
+                }
+                stripIndex--;
+            }
+            else if (isJumpingDown)
+            {
+                isJumpingDown = false;
+                isJumpingUp = true;
+                stripIndex++;
+            }
+            else if (isJumpingLeft)
+            {
+                isJumpingLeft = false;
+                isJumpingRight = true;
+            }
+            else if (isJumpingRight)
+            {
+                isJumpingRight = false;
+                isJumpingLeft = true;
+            }
         }
 
 	if (other.gameObject.tag == COIN)
