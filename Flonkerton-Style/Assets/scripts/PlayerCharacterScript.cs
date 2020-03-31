@@ -16,28 +16,6 @@ public class PlayerCharacterScript : MonoBehaviour
     // GAME MAP VARIABLES
     Vector3 startPosition;
     Vector3 endPosition;
-    // public GameObject strip1;
-    // public GameObject strip2;
-    // public GameObject strip3;
-    // public GameObject strip4;
-    // public GameObject strip5;
-    // public GameObject strip6;
-    // public GameObject strip7;
-    // public GameObject strip8;
-    // public GameObject strip9;
-    // public GameObject strip10;
-    // public GameObject strip11;
-    // public GameObject strip12;
-    // public GameObject strip13;
-    //
-    // public GameObject strip_office1;
-    // public GameObject strip_office2;
-    // public GameObject strip_office3;
-    //
-    // public GameObject strip_outside_wall;
-    // public GameObject strip_office_wall;
-    //public GameObject strip_outside_empty;
-    //public GameObject strip_office_empty;
 
     // PLAYER MOVEMENT VARIABLES
     bool isJumpingUp;
@@ -51,8 +29,6 @@ public class PlayerCharacterScript : MonoBehaviour
     public float HORIZONTAL_JUMP_DISTANCE = 10.0F;
     public GameObject boundaryLeft;
     public GameObject boundaryRight;
-    // public GameObject[] stripOutsidePrefabs;
-    // public GameObject[] stripOfficePrefabs;
 
     // TODO: rename this once characters have been changed
     public GameObject playerMesh;
@@ -79,9 +55,13 @@ public class PlayerCharacterScript : MonoBehaviour
 
     // SCORE AND SCHRUTE BUCKS VARIABLES
     public int score = 0;
+    // TODO: Update these via the Object tag
     public Text scoreText;
+    public Text scoreTextOutline;
     public Text schruteBucksText;
-    public Text highestScoreText;
+    public Text schruteBucksTextOutline;
+    public Text highScoreText;
+    public Text highScoreOutline;
     public Text finalScore;
     private int schruteBucks;
     int stripIndex = 0;
@@ -110,22 +90,6 @@ public class PlayerCharacterScript : MonoBehaviour
     void Start()
     {
         isJumpingUp = isJumpingDown = isJumpingLeft = isJumpingRight = false;
-        // strips = new List<GameObject>();
-        //
-        // // Add all strips to List
-        // strips.Add(strip1);
-        // strips.Add(strip2);
-        // strips.Add(strip3);
-        // strips.Add(strip4);
-        // strips.Add(strip5);
-        // strips.Add(strip6);
-        // strips.Add(strip7);
-        // strips.Add(strip8);
-        // strips.Add(strip9);
-        // strips.Add(strip10);
-        // strips.Add(strip11);
-        // strips.Add(strip12);
-        // strips.Add(strip13);
 
         HideGameOverPanel();
 
@@ -134,8 +98,10 @@ public class PlayerCharacterScript : MonoBehaviour
         if (!PlayerPrefs.HasKey("schruteBucks")) {
           PlayerPrefs.SetInt("schruteBucks", 0);    // Set schrute bucks count
         }
+        // Update Schrute Bucks value
         schruteBucks = PlayerPrefs.GetInt("schruteBucks");
-        schruteBucksText.text = "Schrute Bucks: "+ schruteBucks.ToString();
+        schruteBucksText.text = schruteBucks.ToString();
+        schruteBucksTextOutline.text = schruteBucksText.text;
 
         if (!PlayerPrefs.HasKey("selectedChar")) {
           PlayerPrefs.SetInt("selectedChar", 0);    // Select default character
@@ -144,8 +110,6 @@ public class PlayerCharacterScript : MonoBehaviour
 
         PlayerPrefs.SetInt("play", 0);            // Disable game
         // Check if player is reloading the game or just starting it
-        // Return the current Active Scene in order to get the current Scene name.
-        //Scene curr_scene = SceneManager.GetActiveScene();
         int isReloaded = PlayerPrefs.GetInt("reloaded");
         Debug.Log(isReloaded);
         if (isReloaded == 1) {
@@ -153,7 +117,8 @@ public class PlayerCharacterScript : MonoBehaviour
             StartButtonPressed();
         }
 
-        highestScoreText.text ="Highest Score: "+ PlayerPrefs.GetInt("highestScore", 0).ToString();
+        highScoreText.text = PlayerPrefs.GetInt("highestScore").ToString();
+        highScoreOutline.text = PlayerPrefs.GetInt("highestScore").ToString();
     }
 
     // Update is called once per frame
@@ -307,48 +272,6 @@ public class PlayerCharacterScript : MonoBehaviour
         }
     }
 
-    //void SpawnNewStrip()
-    //{
-    //     Generate a random strip type from list of unique strip types
-    //    int randStrip;
-    //    GameObject stripType;
-
-    //    if (!isOffice)
-    //    {
-    //        randStrip = Random.Range(0, stripOutsidePrefabs.Length);
-    //        stripType = stripOutsidePrefabs[randStrip] as GameObject;
-    //    }
-    //    else {
-    //        randStrip = Random.Range(0, stripOfficePrefabs.Length);
-    //        stripType = stripOfficePrefabs[randStrip] as GameObject;
-    //    }
-
-
-    //     Retrieve width of strip by accessing its grandchild's transform
-    //    Transform childTransform = stripType.transform.GetChild(0) as Transform;
-    //    Transform grandchildTransform = childTransform.GetChild(0) as Transform;
-    //     Get the x coordinate (width) of the strip's mesh box
-    //    float width = grandchildTransform.gameObject.GetComponent<Renderer>()
-    //                  .bounds.size.x;
-    //    Debug.Log(width);
-
-
-    //     Use last strip coordinates to instantiate new strip object
-    //    GameObject lastStrip = strips[strips.Count - 1] as GameObject;
-    //     Clone last strip to instantiate new strip object
-    //    GameObject newStrip = Instantiate(stripType,
-    //                                      lastStrip.transform.position,
-    //                                      lastStrip.transform.rotation);
-    //     Set new  strip to the next available slot in map
-    //    newStrip.transform.position = new Vector3(
-    //        newStrip.transform.position.x - width,
-    //        stripType.transform.position.y,
-    //        stripType.transform.position.z);
-
-    //     Add strip to map
-    //    strips.Add(newStrip);
-    //}
-
     // Checks for enemy collisions
     void OnTriggerEnter(Collider other)
     {
@@ -380,7 +303,8 @@ public class PlayerCharacterScript : MonoBehaviour
 	    Debug.Log("Collision with coin");
 	    // Update Schrute Bucks count
 	    schruteBucks += 1;
-      schruteBucksText.text = "Schrute Bucks: " +schruteBucks.ToString();
+      schruteBucksText.text = schruteBucks.ToString();
+      schruteBucksTextOutline.text = schruteBucksText.text;
 
 	    // Play coin sound
 	    this.GetComponent<AudioSource>().PlayOneShot(coinClip);
@@ -471,15 +395,18 @@ public class PlayerCharacterScript : MonoBehaviour
         if (stripIndex > furthestStrip)
         {
           score++;
-          scoreText.text = "Score: "+score.ToString();
+          scoreText.text = score.ToString();
+          scoreTextOutline.text = scoreText.text;
           furthestStrip = stripIndex;
-          Debug.Log("Score is " + score);
 
-            if (score > PlayerPrefs.GetInt("highestScore",0))
-            {
-                PlayerPrefs.SetInt("highestScore",score);
-                highestScoreText.text = "Highest Score: " + score.ToString();
-            }
+          // Update high score if needed
+          if (score > PlayerPrefs.GetInt("highestScore",0))
+          {
+              PlayerPrefs.SetInt("highestScore",score);
+              // Update high score text
+              highScoreText.text = score.ToString() + " !";
+              highScoreOutline.text = highScoreText.text + " !";
+          }
         }
 
         GameObject nextStrip = mapController.GetStripAtIndex(stripIndex);
@@ -586,8 +513,10 @@ public class PlayerCharacterScript : MonoBehaviour
     // Start the game and hide the start panel when button is pressed
     void StartButtonPressed() {
         Debug.Log("Start Button Pressed");
+        // Update Schrute bucks count
         schruteBucks = PlayerPrefs.GetInt("schruteBucks");
         schruteBucksText.text = schruteBucks.ToString();
+        schruteBucksTextOutline.text = schruteBucksText.text;
         gameStarted = true;
         PlayerPrefs.SetInt("play", 1);
         PlayerPrefs.SetInt("reloaded", 0);
