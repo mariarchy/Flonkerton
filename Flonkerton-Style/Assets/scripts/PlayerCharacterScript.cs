@@ -570,7 +570,7 @@ public class PlayerCharacterScript : MonoBehaviour
         gameOverPanel.SetActive(true);
         if (score.Equals(PlayerPrefs.GetInt("highestScore", 0)))
         {
-            finalScore.text = "Your Score: " + score.ToString() + "NEW TOP!";
+            finalScore.text = "Your Score: " + score.ToString() + " NEW HIGH SCORE!";
         }
         else
         {
