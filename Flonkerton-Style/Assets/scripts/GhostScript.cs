@@ -8,7 +8,7 @@ public class GhostScript : MonoBehaviour
     public float speed = 3F;
     public float regularSpeed = 3F;
     public float maxSpeed = 7F;
-    public const float CLOSE_DISTANCE = 5;
+    public const float CLOSE_DISTANCE = 15;
 
     private bool gameStarted = false;
 
